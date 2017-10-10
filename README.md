@@ -256,7 +256,6 @@ Secondly, execute `docker system prune -f` to clean the docker environment, and 
 If the problem disappear, say thanks to Gandalf and enjoy!  
 But if the problem always exists, open an issue to help us to improve `rothenberg`.  
 
-
 ### Guidelines to open an issue
 
 Please, describe your problem precisely and give maximum information about your environment:
@@ -276,8 +275,7 @@ Moreover, if you encounter a problem during a `make` command execution, reexecut
 
 There are some `make` targets to test `Rothenberg`, specialy install and update of bundle and application.  
 To run them, just do `make tests`.  
-Be conscient that these tests use files cloned from `github` repository, so you must push your code on it before running tests.
-And please, do not omit to update tests before implemeting new feature or doing a bug fix.
+Please, do not omit to update tests before implemeting new feature or doing a bug fix.  
 To update tests, just update contents of `references` directory.
 
 ### About workflow
