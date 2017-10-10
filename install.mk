@@ -20,6 +20,8 @@ ifeq ($(filter $(TARGET),app bundle),)
 $(error Target $(TARGET) is invalid!);
 endif
 
+.SILENT:
+
 .SUFFIXES:
 
 .DELETE_ON_ERROR:
