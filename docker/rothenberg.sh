@@ -11,4 +11,4 @@ fi
 composer config repositories.norsys-rothenberg vcs $DOCKER_VCS
 composer require --dev --ignore-platform-reqs --no-suggest norsys/rothenberg:$VERSION
 
-make -f vendor/norsys/rothenberg/install.mk install TARGET=$TARGET COMPOSER_BIN=$(which composer) PHP_BIN=$(which php)
+make -f vendor/norsys/rothenberg/install.mk install TARGET=$TARGET COMPOSER_BIN=$(which composer 2>/dev/null) PHP_BIN=$(which php 2>/dev/null)

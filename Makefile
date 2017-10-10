@@ -9,14 +9,12 @@ CP := cp -r
 
 REPOSITORY_STATUS := $(shell git status --porcelain | wc -l)
 
+include resources/env/utils.mk
+
 define check-repository
 ifneq "$(strip $(REPOSITORY_STATUS))" "0"
 $$(error Repository is not clean, please add and commit files);
 endif
-endef
-
-define bin
-$(or $(shell which $1),$(error \`$1\` is not in \`$(PATH)\`, please install it!))
 endef
 
 define create-oracle
@@ -52,7 +50,7 @@ endef
 
 docker/%: DOCKER_IMAGE ?= hub.docker.com/norsys/rothenberg
 docker/%: DOCKER_TAG ?= latest
-docker/%: DOCKER_BIN ?= $(call bin,docker)
+docker/%: DOCKER_BIN ?= $(call locate-binary,docker)
 
 .PHONY: docker/build
 docker/build:
