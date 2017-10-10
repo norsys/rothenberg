@@ -1,0 +1,4 @@
+# This file MUST NOT be updated by Rothenberg
+
+app:
+    resource: "@AppBundle/Resources/config/routing.yml"

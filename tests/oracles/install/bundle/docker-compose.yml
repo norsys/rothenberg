@@ -1,0 +1,34 @@
+version: '2.1'
+
+services:
+    php-cli:
+        user: ${USER_ID}
+        image: php:7.1.7-cli
+        working_dir: /src
+        environment:
+            - ENV=${ENV}
+            - SYMFONY_ENV=${SYMFONY_ENV}
+            - SYMFONY_DEBUG=${SYMFONY_DEBUG}
+        volumes:
+            - .:/src
+            # @TODO check if it is not useless to use this PHP configuration file
+            #- ./env/php/cli.ini:/usr/local/etc/php/conf.d/host/php.ini
+
+    composer:
+        user: ${USER_ID}
+        image: composer:1.4.2
+        working_dir: /src
+        volumes:
+            - ${SSH_KEY}:${SSH_KEY}:ro
+            - ./composer.passwd:/etc/passwd
+            - .:/src
+            - ./tmp:/tmp
+            - ./app/console.php:/src/bin/console # this mount-point MUST be done because composer use PHP binary to run post-(?:install|update) scripts, so it's not possible to use the docker-compose wrapper in this context.
+            - ${COMPOSER_CACHE}:/.composer
+        environment:
+            - PATH=/composer/bin:${PATH}
+            - COMPOSER_HOME=/composer/.composer
+            - COMPOSER_CACHE_DIR=/.composer
+            - COMPOSER_ALLOW_SUPERUSER=1
+            - GIT_SSH_COMMAND=ssh -i ${SSH_KEY} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+            - SYMFONY_ENV=${SYMFONY_ENV}

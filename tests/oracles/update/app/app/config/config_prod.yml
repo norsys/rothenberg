@@ -1,0 +1,4 @@
+# This file MUST NOT be updated by Rothenberg
+
+imports:
+    - { resource: config.yml }

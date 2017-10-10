@@ -1,0 +1,5 @@
+tests/cases/*
+references/install/app/.git
+references/install/bundle/.git
+references/update/app/.git
+references/update/bundle/.git

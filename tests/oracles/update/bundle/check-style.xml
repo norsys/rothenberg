@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ruleset name="CheckStyleStandard">
+    <rule ref="Squiz.Commenting.FunctionComment.Missing">
+      <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Commenting.ClassComment.Missing">
+      <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Commenting.VariableComment.Missing">
+      <severity>0</severity>
+    </rule>
+</ruleset>

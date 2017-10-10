@@ -1,0 +1,88 @@
+version: '2.1'
+
+services:
+    nginx:
+        container_name: ${VIRTUAL_HOST}
+        image: nginx:1.13.3
+        working_dir: /src
+        volumes:
+            - .:/src
+            - ./env/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - php-fpm
+        environment:
+            - VIRTUAL_HOST=${VIRTUAL_HOST}
+            - VIRTUAL_PORT=80
+        networks:
+            - rothenberg # Link to rothenberg network, handled by `env/docker-compose.rothenberg.yml` and run by `make` at `start`, see the `networks` section below.
+            - default
+
+    hosts:
+        image: ubuntu:16.04
+        volumes:
+            - ${ETC}:${HOSTS_ETC}
+        command: "/bin/true"
+
+    php-fpm:
+        user: ${USER_ID}
+        image: php:7.1.7-fpm
+        working_dir: /src
+        environment:
+            - ENV=${ENV}
+            - SYMFONY_ENV=${SYMFONY_ENV}
+            - SYMFONY_DEBUG=${SYMFONY_DEBUG}
+        volumes:
+            - .:/src
+            - ./var/cache:/tmp
+            - ./env/php/fpm.ini:/usr/local/etc/php/conf.d/host/php.ini
+
+    php-cli:
+        user: ${USER_ID}
+        image: php:7.1.7-cli
+        working_dir: /src
+        environment:
+            - ENV=${ENV}
+            - SYMFONY_ENV=${SYMFONY_ENV}
+            - SYMFONY_DEBUG=${SYMFONY_DEBUG}
+        volumes:
+            - .:/src
+            - ./var/cache:/tmp
+            - ./env/php/cli.ini:/usr/local/etc/php/conf.d/host/php.ini
+
+    composer:
+        user: ${USER_ID}
+        image: composer:1.4.2
+        working_dir: /src
+        volumes:
+            - ${SSH_KEY}:${SSH_KEY}:ro
+            - ./composer.passwd:/etc/passwd
+            - .:/src
+            - ./app/console.php:/src/bin/console # this mount-point MUST be done because composer use PHP binary to run post-(?:install|update) scripts, so it's not possible to use the docker-compose wrapper in this context.
+            - ${COMPOSER_CACHE}:/.composer
+        environment:
+            - PATH=/composer/bin:${PATH}
+            - COMPOSER_HOME=/composer/.composer
+            - COMPOSER_CACHE_DIR=/.composer
+            - COMPOSER_ALLOW_SUPERUSER=1
+            - GIT_SSH_COMMAND=ssh -i ${SSH_KEY} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+            - SYMFONY_ENV=${SYMFONY_ENV}
+
+    node:
+        user: ${USER_ID}
+        image: node:7.10.1
+        working_dir: /src/env/node
+        volumes:
+            - ${NPM_CACHE}:/.npm
+            - .:/src
+        environment:
+            - SYMFONY_ENV=${SYMFONY_ENV}
+
+    phantomjs:
+        image: wernight/phantomjs:2.1.1
+        entrypoint: phantomjs
+        command: "--webdriver=8910"
+
+networks:
+    rothenberg:
+        external:
+            name: ${NETWORK}_default

@@ -1,0 +1,41 @@
+# This file MUST NOT be updated by Rothenberg
+
+app_ajax:
+    resource: "@AppBundle/Resources/config/routing/ajax.yml"
+
+app_static:
+    resource: "@AppBundle/Resources/config/routing/static.yml"
+
+app_workflow:
+    resource: "@AppBundle/Resources/config/routing/workflow.yml"
+
+app_quotation:
+    resource: "@AppBundle/Resources/config/routing/quotation.yml"
+
+go_to_previous_step:
+    path: /previous_step
+    methods: ['GET']
+    defaults: { _controller: app.controller:goToPreviousStepAction}
+
+workflow_erase:
+    path: /wk/rm
+    methods: ['GET']
+    defaults: { _controller: app.controller.workflow:eraseAction}
+
+mail:
+    path: /formRdv/Mailing/{leadKey}
+    methods: ['GET']
+    defaults: { _controller: app.controller.mail:indexAction }
+    requirements:
+        leadKey: '[\w\$\/\.]{60}'
+
+iframe_test:
+    path: /iframe/test
+    methods: ['GET']
+    defaults: { _controller: app.controller.iframe:testAction }
+
+iframe:
+    path: /iframe
+    # Patch GET is allowed to support the old iframe
+    methods: ['POST', 'GET']
+    defaults: { _controller: app.controller.iframe:indexAction }

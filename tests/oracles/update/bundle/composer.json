@@ -1,0 +1,18 @@
+{
+    "repositories": {
+        "norsys-rothenberg": {
+            "type": "vcs",
+            "url": "/vcs/rothenberg"
+        }
+    },
+    "require-dev": {
+        "norsys/rothenberg": "dev-master",
+        "squizlabs/php_codesniffer": "^2.6",
+        "atoum/atoum": "~3.0",
+        "atoum/stubs": "~2.5",
+        "atoum/bdd-extension": "~2.1"
+    },
+    "require": {
+        "php": ">=7.0.0"
+    }
+}

@@ -1,0 +1,21 @@
+{
+	"name": "norsys/rothenberg",
+	"license": "BSD-3-Clause",
+	"type": "project",
+	"description": "Tool which allow a developper to create or maintain a Symfony application or a Symfony bundle very easily and without install something on his workstation",
+	"keywords": [
+		"Symfony",
+		"composer",
+		"docker",
+		"docker-compose",
+		"make"
+	],
+	"authors":
+		[
+			{
+				"name": "Frédéric Hardy",
+				"email": "frederic.hardy@atoum.org",
+				"homepage": "http://blog.mageekbox.net"
+			}
+		]
+}
