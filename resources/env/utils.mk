@@ -23,6 +23,10 @@ define locate-binary
 $(or $(shell which $1),$(error \`$1\` is not in \`$(PATH)\`, please install it!))
 endef
 
+define merge-file
+cat $1 $2 2>/dev/null | sort | uniq | grep -v -E '^\s*$$' > $1
+endef
+
 WITH_DEBUG ?=
 
 ifneq ($(WITH_DEBUG),)

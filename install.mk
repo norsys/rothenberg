@@ -60,10 +60,10 @@ env/php/%.ini: | env/php
 	$(CP) $(RESOURCES_DIR)/$@ $@
 
 .gitignore: $(RESOURCES_DIR)/.gitignore.$(TARGET)
-	cat $@ $< 2>/dev/null | sort | uniq | grep -v -E '^\s*$$' | tee $@
+	$(call merge-file,$@,$<)
 
 .git%: $(RESOURCES_DIR)/.git%
-	cat $@ $< 2>/dev/null | sort | uniq | grep -v -E '^\s*$$' | tee $@
+	$(call merge-file,$@,$<)
 
 bin/%: env/Makefile
 	$(MAKE) -f $< $@
