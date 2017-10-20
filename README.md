@@ -46,7 +46,7 @@ These images are:
 - `php-fpm` ;
 - `php-cli` ;
 - `composer` ;
-- `node` ;
+- `node`.
 
 It's possible to deactivate this feature via the `.rothenberg.config` file.
 
