@@ -284,7 +284,7 @@ We're using pull request to introduce new fixtures and bug fixes.
 Please, try to be explicit in your commit messages:
 
 1. Explain why the change was made ;
-2. Explain technical implementation (you can provide links to any relevant tickets, articles or other resources) ;
+2. Explain technical implementation (you can provide links to any relevant tickets, articles or other resources).
 
 You can use the following template:
 
