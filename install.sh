@@ -13,7 +13,7 @@ if [ -z "$SSH_KEY" ]; then
 fi
 
 DOCKER_ACTION=
-DOCKER_IMAGE=hub.docker.com/norsys/rothenberg
+DOCKER_IMAGE=norsys/rothenberg
 COMPOSER_VCS=
 DOCKER_VCS=
 INSTALL_DIRECTORY=.
