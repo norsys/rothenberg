@@ -39,7 +39,7 @@ If you want to override some services's configuration, use [`docker-compose.over
 
 ### Docker images management
 
-`Rothenberg` pull last version of each docker images via `make start` or `make restart` (see below for more information about these commands).  
+`Rothenberg` pulls the lastest version of each docker image via `make start` or `make restart` (see below for more information about these commands).  
 These images are:
 
 - `nginx` ;
@@ -48,25 +48,25 @@ These images are:
 - `composer` ;
 - `node`.
 
-It's possible to deactivate this feature via the `.rothenberg.config` file.
+It's possible to disable this feature via the `.rothenberg.config` file.
 
 ### Default PHP configuration for `CLI` and `FPM`
 
-`Rothenberg` provide `php.ini` for CLI and FPM in `path/to/project/env/php/cli` and `path/to/project/env/php/fpm` respectively.
+`Rothenberg` provides a `php.ini` for CLI and FPM in `path/to/project/env/php/cli` and `path/to/project/env/php/fpm` respectively.
 
 ### Helpers to hide `docker` and `docker-compose`
 
-`Rothenberg` provide several helpers in `path/to/project/bin` to hide `docker` and `docker-compose` complexity.  
+`Rothenberg` provides several helpers in `path/to/project/bin` to hide `docker` and `docker-compose` complexity.  
 So, all scripts in `path/to/project/bin` can be run in the traditional way even if `docker` is used in the background.  
 For example, to update PHP depedencies, just do `bin/composer update`.
 
 ### Atoum configuration
 
-`Rothenberg` install file `path/to/project/.atoum.php`, an atoum's runner and a base test class in `path/to/project/tests/units`.
+`Rothenberg` installs files `path/to/project/.atoum.php`, an atoum runner and a base test class in `path/to/project/tests/units`.
 
-### Automatised `nginx` virtual host management
+### Automated `nginx` virtual host management
 
-`Rothenberg` provide an automatised `nginx` virtual host management via the `make` variable `VIRTUAL_HOST`.  
+`Rothenberg` provides an automated `nginx` virtual host management via the `make` variable `VIRTUAL_HOST`.  
 To define the virtual host for your project, define its value before including `./env/Makefile` (see below for more information about that):
 
 ```
@@ -77,13 +77,13 @@ include env/Makefile
 
 ### Networking
 
-`Rothenberg` allow you to shared an [`nginx-proxy`](https://github.com/jwilder/nginx-proxy) docker's service between several project, or any other services.  
-For that, it create a network named according to value of make's `ROTHENBERG_NETWORK` variable, which has `rothenberg` as default value.  
+`Rothenberg` allows you to share an [`nginx-proxy`](https://github.com/jwilder/nginx-proxy) docker's service between several projects, or any other services.  
+For that purpose, it creates a network named according to the value of make's `ROTHENBERG_NETWORK` variable, which has `rothenberg` as default value.  
 If you want to override its value, in the project's `Makefile`, just add `ROTHENBERG_NETWORK := yourNetworkName` before including `env/Makefile` (see below for more information about that).
 
 ### Environment management
 
-`Rothenberg` allow you to install a project in several environment using the `make` variable `ENV` and [`SYMFONY_ENV`](http://symfony.com/doc/current/configuration/environments.html).  
+`Rothenberg` allows you to install a project in several environments using the `make` variable `ENV` and [`SYMFONY_ENV`](http://symfony.com/doc/current/configuration/environments.html).  
 Default value of `ENV` is `dev`, and the default value of `SYMFONY_ENV` is `ENV`.  
 So, to install a project in a `prod` environmment using the `dev` Symfony environment, just do:
 
@@ -99,21 +99,21 @@ By default, the symfony debug mode is enabled, but you can disable it using the 
 
 ### Private PHP package management
 
-`Rothenberg` can handle SSH key needed to access some private PHP package via `composer`.  
+`Rothenberg` can handle SSH key needed to access some private PHP packages via `composer`.  
 Out of the box, it will use the key `$(HOME)/.ssh/id_rsa`, but you can override this using `make <target> SSH_KEY=/path/to/your/ssh/key`.
 Your secret key will never be copied by `Rothenberg`.
 
 ### Default `Makefile`
 
-If your project has no `Makefile` during its installation, `Rothenberg` provide a default `Makefile` for your project.  
-Moreover, it provide in `path/to/project/env` a `Makefile` with some interesting targets (see below).  
+If your project has no `Makefile` during its installation, `Rothenberg` provides a default `Makefile` for it.  
+Moreover, it provides in `path/to/project/env` a `Makefile` with some interesting targets (see below).  
 This `Makefile` is already included in the default `Makefile` provided by `Rothenberg`.  
-If the project has already a `Makefile` before `Rothenberg` installation, add `include env/Makefile` in it to use `Rothenberg` targets.
+If the project already has a `Makefile` before `Rothenberg` installation, add `include env/Makefile` in it to use `Rothenberg` targets.
 
 
 ### Project Management
 
-`Rothenberg` allow you to use *make* to manage a project, with the following `make` targets:
+`Rothenberg` allows you to use *make* to manage a project, with the following `make` targets:
 
 - `install` install localy `docker-compose`, `php-(?:cli|fpm)`, `composer`, `node`, `npm`, `nginx` and configure them ;
 - `reinstall` restart the project ;
@@ -134,12 +134,12 @@ Use `make help` to know available targets according to your type of project.
 
 ### Git configuration
 
-`Rothenberg` install files `.gitignore` and `.gitattribute` with default values in the directory `path/to/project`.  
-Moreover, it install a [pre-commit hook](https://git-scm.com/book/it/v2/Customizing-Git-Git-Hooks) to check coding convention via  `make check-style`.
+`Rothenberg` installs files `.gitignore` and `.gitattribute` with default values in the directory `path/to/project`.  
+Moreover, it installs a [pre-commit hook](https://git-scm.com/book/it/v2/Customizing-Git-Git-Hooks) to check coding convention via  `make check-style`.
 
 ### Assets watcher
 
-`Rothenberg` provide an assets watcher via `bin/watchodg`, which is automaticaly started via `make start` or `make restart`.
+`Rothenberg` provides an assets watcher via `bin/watchodg`, which is automaticaly started via `make start` or `make restart`.
 
 ## Requierements
 
@@ -153,7 +153,7 @@ That's all!
 
 ## Installation in a project
 
-You can install `Rothenberg` in a new project or in an existing project.  
+You can install `Rothenberg` in a new project or in an existing one.  
 For example, if your project is an application located in `path/to/project`:
 
 1. `cd path/to/project` ;
@@ -177,7 +177,7 @@ After that, you can add  and commit all new files in your project (yes, really, 
 
 ### Configuration of `docker` and `docker-compose`
 
-If your project need some aditionnal `docker` services, define them in the [`./docker-compose.override.yml`](https://docs.docker.com/compose/extends/#understanding-multiple-compose-files).  
+If your project needs some aditionnal `docker` services, define them in the [`./docker-compose.override.yml`](https://docs.docker.com/compose/extends/#understanding-multiple-compose-files).  
 For example, to add `mysql`, edit `./docker-compose.override.yml` and add this in the `services` section:
 
 ```
@@ -201,7 +201,7 @@ For more informations about `./docker-compose.override.yml`, please read its [of
 ### Configuration of `make`
 
 You can add [prerequisites](https://www.gnu.org/software/make/manual/html_node/Rule-Syntax.html#Rule-Syntax) for targets defined by `Rothenberg`.  
-For example, if you want create the directory `var/mysql` via `make`, add in `./Makefile` after the include of `./env/Makefile`:
+For example, if you want to create the directory `var/mysql` via `make`, add in `./Makefile` after the include of `./env/Makefile`:
 
 ```
 vendor/autoload.php: | var/mysql
@@ -219,19 +219,19 @@ Some special targets defined by `Rothenberg` are used in this example:
 
 Moreover, the target `uninstall/var/mysql` is handled by the [pattern rule](https://www.gnu.org/software/make/manual/html_node/Pattern-Intro.html#Pattern-Intro) `uninstall/%` which delete any file or directory defined by wildcard `%`.  
 
-If you want to know all targets defined by `Rothenberg` to add them some prerequisites, just do `make rothenberg-targets`.  
+If you want to know all targets defined by `Rothenberg` to add some prerequisites to them, just do `make rothenberg-targets`.  
 For more informations about `make`' syntax and features, please read its [official documentation](https://www.gnu.org/software/make/manual/html_node/).
 
 ### Configuration of `PHP`
 
 You can customize PHP's configuration in `CLI` and `FPM` context.  
-To do that for `CLI` context, edit `path/to/project/env/php/cli/php.ini` (respectively `path/to/project/env/php/fpm/php.ini` for `FPM`) and execute `make restart`.
-For more informations about PHP configuration, please read its [official documentation](http://php.net/manual/en/ini.core.php).
+To do that for `CLI` context, edit `path/to/project/env/php/cli/php.ini` (or `path/to/project/env/php/fpm/php.ini` for `FPM`) and execute `make restart`.
+For more information about PHP configuration, please read its [official documentation](http://php.net/manual/en/ini.core.php).
 
 ### Check styling
 
-Out of the box, `Rothenberg` provide PHP check styling configured via `path/to/project/env/check-style.xml` and `make check-style`, but you can add check style for some other languages.
-For example, to add check styling for JavaScript using [`eslint`](http://eslint.org), add this in `path/to/project/Makefile`:
+Out of the box, `Rothenberg` provides PHP style checking configured via `path/to/project/env/check-style.xml` and `make check-style`, but you can add style checking for some other languages.
+For example, to add style checking for JavaScript using [`eslint`](http://eslint.org), add this in `path/to/project/Makefile`:
 
 ```
 check-style: check-style-js
@@ -251,9 +251,9 @@ To update `Rothenberg` in a project, just do:
 
 ## Houston? We've got a problem!
 
-Firstly, don't panic.
-Secondly, execute `docker system prune -f` to clean the docker environment, and try to reproduce the problem.  
-If the problem disappear, say thanks to Gandalf and enjoy!  
+First, don't panic.
+Then execute `docker system prune -f` to clean the docker environment, and try to reproduce the problem.  
+If the problem disappears, say thanks to Gandalf and enjoy!  
 But if the problem always exists, open an issue to help us to improve `rothenberg`.  
 
 ### Guidelines to open an issue
@@ -276,11 +276,11 @@ Moreover, if you encounter a problem during a `make` command execution, reexecut
 There are some `make` targets to test `Rothenberg`, specialy install and update of bundle and application.  
 To run them, just do `make tests`.  
 Please, do not omit to update tests before implemeting new feature or doing a bug fix.  
-To update tests, just update contents of `references` directory.
+To update tests, just update the content of the `references` directory.
 
 ### About workflow
 
-We're using pull request to introduce new fixtures and bug fixes.  
+We're using pull request to introduce new features and bug fixes.  
 Please, try to be explicit in your commit messages:
 
 1. Explain why the change was made ;
