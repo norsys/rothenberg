@@ -1,32 +1,23 @@
 # Rothenberg
 
 `Rothenberg` allows a developper to create or maintain a Symfony application or a Symfony bundle very easily and without install something on his workstation (Mac or PC, Windows is not currently supported).  
-To do that, it use `docker`, `docker-compose`, `make` and `composer`.  
-`Rothenberg` is not a standalone project, and it must be used in the context of an another project.  
-In the following, we will assume that `Rothenberg` was used from the directory `path/to/project`.
+It is not a standalone project, so it must be used in the context of an another project.
 
 ## TL;DR
 
-To use `Rothenberg` to develop or maintain a Symfony application, execute the following command in a terminal:
+If you have an UNIX operating system and `docker`, `GNU make` and an Internet access, to use `Rothenberg` to develop or maintain a Symfony application, execute the following command in a terminal:
 
 ```
 wget -O - https://github.com/norsys/rothenberg/raw/master/install.sh | sh
 ```
 
-Or to use `Rothenberg` in the context of a Symfony bundle, do:
+Or to use it in the context of a Symfony bundle, do:
 
 ```
 (export TARGET=bundle; wget -O - https://github.com/norsys/rothenberg/raw/master/install.sh | sh)
 ```
 
 But… maybe you should read the following information before executing one of these commands!
-
-## Objectives
-
-`Rothenberg` must allow a user to install an isolated Symfony environment on its workstation easily and rapidily in order to develop an application or a bundle.  
-Morever, the user must only have a UNIX operating system, `docker`, a CLI HTTP client (aka *wget* or *curl*) and `make` to use it.  
-It must be used for a "from scratch" project or in the context of an already existing project.  
-And at least, it must be simple, easy and intuitive to use.
 
 ## Features
 
@@ -110,7 +101,6 @@ Moreover, it provides in `path/to/project/env` a `Makefile` with some interestin
 This `Makefile` is already included in the default `Makefile` provided by `Rothenberg`.  
 If the project already has a `Makefile` before `Rothenberg` installation, add `include env/Makefile` in it to use `Rothenberg` targets.
 
-
 ### Project Management
 
 `Rothenberg` allows you to use *make* to manage a project, with the following `make` targets:
@@ -141,17 +131,9 @@ Moreover, it installs a [pre-commit hook](https://git-scm.com/book/it/v2/Customi
 
 `Rothenberg` provides an assets watcher via `bin/watchodg`, which is automatically started via `make start` or `make restart`.
 
-## Requirements
+## Installation
 
-- *Unix* (installation process was tested on *Ubuntu* and *OSX*) ;
-- *Docker* ;
-- *wget* or any equivalent (for install only) ;
-- *GNU make* ;
-- Internet access.
-
-That's all!
-
-## Installation in a project
+### For an application
 
 You can install `Rothenberg` in a new project or in an existing one.  
 For example, if your project is an application located in `path/to/project`:
@@ -159,15 +141,22 @@ For example, if your project is an application located in `path/to/project`:
 1. `cd path/to/project` ;
 2. Do `wget -O - https://github.com/norsys/rothenberg/raw/bundle/install.sh | sh`.
 
-And if your project is a bundle located in `path/to/project`:
+Once the install is done, if you already have a `./Makefile`, just add `include env/Makefile` in it to profit of `Rothenberg`'s targets.  
+You can also define `VIRTUAL_HOST` variable before including `env/Makefile` (see above for more informations).  
+Moreover, you can edit [`./docker-compose.override.yml`](https://docs.docker.com/compose/extends/#understanding-multiple-compose-files) to add specific `docker` services or networks.  
+Finaly, do `make start` to download PHP depedencies and start services.
+
+## For a bundle
 
 1. `cd path/to/project` ;
 2. Do `(export TARGET=bundle; wget -O - https://github.com/norsys/rothenberg/raw/bundle/install.sh | sh)`.
 
-After that, if you already have a `./Makefile`, just add `include env/Makefile` in it to profit of `Rothenberg`'s targets.  
-You can also define `VIRTUAL_HOST` variable before including `env/Makefile` (see above for more informations).  
-Moreover, you can edit [`./docker-compose.override.yml`](https://docs.docker.com/compose/extends/#understanding-multiple-compose-files) to add specific `docker` services or networks.  
-After that, you can add  and commit all new files in your project (yes, really, commit them in your project):
+Once the install is done, if you already have a `./Makefile`, just add `include env/Makefile` in it to profit of `Rothenberg`'s targets.  
+Moreover, you can edit [`./docker-compose.override.yml`](https://docs.docker.com/compose/extends/#understanding-multiple-compose-files) to add specific `docker` services or networks.
+
+## Common steps for application and bundle
+
+After installation was done, you can add and commit all new files in your project (yes, really, commit them in your project):
 
 1. `git add .` ;
 2. `git commit -m "<WHATEVER YOU WANT>"` ;
@@ -255,10 +244,7 @@ First, don't panic.
 Then execute `docker system prune -f` to clean the docker environment, and try to reproduce the problem.  
 If the problem disappears, say thanks to Gandalf and enjoy!  
 But if the problem always exists, open an issue to help us to improve `rothenberg`.  
-
-### Guidelines to open an issue
-
-Please, describe your problem precisely and give maximum information about your environment:
+If you open an issue, describe your problem precisely and give maximum information about your environment:
 
 - Operating system ;
 - `docker` version, do `docker --version` to obtain it ;
@@ -270,13 +256,6 @@ Please, describe your problem precisely and give maximum information about your 
 Moreover, if you encounter a problem during a `make` command execution, reexecute it with `make <YOUR TARGET HERE> WITH_DEBUG=yes`, and add the output to your issue.  
 
 ## Contributing
-
-### About testing
-
-There are some `make` targets to test `Rothenberg`, especially install and update of bundle and application.  
-To run them, just do `make tests`.  
-Please, do not omit to update tests before implemeting new feature or doing a bug fix.  
-To update tests, just update the content of the `references` directory.
 
 ### About workflow
 
@@ -301,6 +280,13 @@ To use it, just put it in a text file in (for example) your home and define it a
 ```
 # git config --global commit.template ~/.git_commit_template.txt
 ```
+
+### About testing
+
+There are some `make` targets to test `Rothenberg`, especially install and update of bundle and application.  
+To run them, just do `make tests`.  
+Please, do not omit to update tests before implemeting new feature or doing a bug fix.  
+To update tests, just update the content of the `references` directory.
 
 ## Languages and tools
 
