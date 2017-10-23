@@ -301,7 +301,7 @@ To update tests, just update the content of the `references` directory.
 
 Primary version of `Rothenberg` was born in the PHP business unit of [Norsys](http://norsys.fr), based in [Lyon, France](https://www.google.fr/maps/place/Lyon/@45.75801,4.8001016,13z/data=!3m1!4b1!4m5!3m4!1s0x47f4ea516ae88797:0x408ab2ae4bb21f0!8m2!3d45.764043!4d4.835659).  
 It was made with love to industrialize our PHP development based upon Symfony.  
-This project was a success, because we can now bootstrap a new project or integrate a team and start to develop some features of fix bugs in a few minutes.  
+This project was a success, because we can now bootstrap a project or integrate a team and start to develop some features of fix bugs in a few minutes.  
 So, we decided to open-source it, because we thinks that this kind of tools must be shared with the PHP community.
 
 ## Why `Rothenberg`?
