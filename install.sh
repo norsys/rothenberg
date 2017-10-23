@@ -78,4 +78,4 @@ cd $INSTALL_DIRECTORY
 
 echo "root:x:$(id -u):0:root:/root:/bin/sh" > $(pwd)/passwd
 
-docker run --rm -v $(pwd):/src -v $HOME/.ssh:/.ssh -v $HOME/.composer:/.composer -v $(pwd)/passwd:/etc/passwd $COMPOSER_VCS -u $(id -u) -e TARGET=$TARGET -e VERSION=$VERSION -e SSH_KEY=$SSH_KEY -e DOCKER_VCS=$DOCKER_VCS $DOCKER_IMAGE -e WITH_DEBUG=$WITH_DEBUG
+docker run --rm -v $(pwd):/src -v $HOME/.ssh:/.ssh -v $HOME/.composer:/.composer -v $(pwd)/passwd:/etc/passwd $COMPOSER_VCS -u $(id -u) -e TARGET=$TARGET -e VERSION=$VERSION -e SSH_KEY=$SSH_KEY -e DOCKER_VCS=$DOCKER_VCS -e WITH_DEBUG=$WITH_DEBUG $DOCKER_IMAGE

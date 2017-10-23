@@ -253,7 +253,8 @@ If you open an issue, describe your problem precisely and give maximum informati
 - Give output of `docker ps -a` ;
 - Give output of `docker network ls` ;
 
-Moreover, if you encounter a problem during a `make` command execution, reexecute it with `make <YOUR TARGET HERE> WITH_DEBUG=yes`, and add the output to your issue.  
+Moreover, if you encounter a problem during installation, reexecute it with `(export WITH_DEBUG=yes; wget -O - https://github.com/norsys/rothenberg/raw/master/install.sh | sh)`, and add the output to your issue.  
+And if you encounter a problem during a `make` command execution, reexecute it with `make <YOUR TARGET HERE> WITH_DEBUG=yes`, and add the output to your issue.
 
 ## Contributing
 
