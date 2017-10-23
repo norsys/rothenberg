@@ -307,7 +307,8 @@ To use it, just put it in a text file in (for example) your home and define it a
 - [*docker*](https://docs.docker.com) ;
 - [*docker-compose*](https://docs.docker.com/compose/) ;
 - [*atoum*](http://docs.atoum.org) ;
-- [*make*](https://www.gnu.org/software/make/manual/make.html).
+- [*make*](https://www.gnu.org/software/make/manual/make.html) ;
+- [*Symfony*](http://symfony.com/doc/current/index.html).
 
 ## Why `Rothenberg`?
 
