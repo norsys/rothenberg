@@ -1,6 +1,6 @@
 # Rothenberg
 
-`Rothenberg` allow a developper to create or maintain a Symfony application or a Symfony bundle very easily and without install something on his workstation (Mac or PC, Windows is not currently supported).  
+`Rothenberg` allows a developper to create or maintain a Symfony application or a Symfony bundle very easily and without install something on his workstation (Mac or PC, Windows is not currently supported).  
 To do that, it use `docker`, `docker-compose`, `make` and `composer`.  
 `Rothenberg` is not a standalone project, and it must be used in the context of an another project.  
 In the following, we will assume that `Rothenberg` was used from the directory `path/to/project`.
@@ -19,7 +19,7 @@ Or to use `Rothenberg` in the context of a Symfony bundle, do:
 (export TARGET=bundle; wget -O - https://github.com/norsys/rothenberg/raw/master/install.sh | sh)
 ```
 
-But… maybe you should read the following informations before executing one of these commands!
+But… maybe you should read the following information before executing one of these commands!
 
 ## Objectives
 
@@ -34,7 +34,7 @@ In the following, we assume that the command `make -f vendor/norsys/rothenberg/M
 
 ### Docker and docker-compose configuration
 
-`Rothenberg` create a `docker-compose.yml` with some services pre-configured and an empty `docker-compose.override.yml` (only if this file does not exist) in the directory `path/to/project`.  
+`Rothenberg` creates a `docker-compose.yml` with some services pre-configured and an empty `docker-compose.override.yml` (only if this file does not exist) in the directory `path/to/project`.  
 If you want to override some services's configuration, use [`docker-compose.override.yml`](https://docs.docker.com/compose/extends/#understanding-multiple-compose-files).
 
 ### Docker images management
@@ -58,7 +58,7 @@ It's possible to disable this feature via the `.rothenberg.config` file.
 
 `Rothenberg` provides several helpers in `path/to/project/bin` to hide `docker` and `docker-compose` complexity.  
 So, all scripts in `path/to/project/bin` can be run in the traditional way even if `docker` is used in the background.  
-For example, to update PHP depedencies, just do `bin/composer update`.
+For example, to update PHP dependencies, just do `bin/composer update`.
 
 ### Atoum configuration
 
@@ -91,7 +91,7 @@ So, to install a project in a `prod` environmment using the `dev` Symfony enviro
 # make install ENV=prod SYMFONY_ENV=dev
 ```
 
-By default, the symfony debug mode is enabled, but you can disable it using the `make` variable `SYMFONY_DEBUG`:
+By default, the Symfony debug mode is enabled, but you can disable it using the `make` variable `SYMFONY_DEBUG`:
 
 ```
 # make install SYMFONY_DEBUG=false
@@ -122,7 +122,7 @@ If the project already has a `Makefile` before `Rothenberg` installation, add `i
 - `stop` stop all services needed by the project ;
 - `restart` restart all services ;
 - `status` display status of each services ;
-- `security` to check security of PHP depedencies ;
+- `security` to check security of PHP dependencies ;
 - `check-style-php` to check PHP coding convention according to `env/php/check-style.xml` ;
 - `fix-style-php` to fix PHP coding convention according to `env/php/check-style.xml` ;
 - `unit-tests` to run all unit tests ;
@@ -139,9 +139,9 @@ Moreover, it installs a [pre-commit hook](https://git-scm.com/book/it/v2/Customi
 
 ### Assets watcher
 
-`Rothenberg` provides an assets watcher via `bin/watchodg`, which is automaticaly started via `make start` or `make restart`.
+`Rothenberg` provides an assets watcher via `bin/watchodg`, which is automatically started via `make start` or `make restart`.
 
-## Requierements
+## Requirements
 
 - *Unix* (installation process was tested on *Ubuntu* and *OSX*) ;
 - *Docker* ;
@@ -273,7 +273,7 @@ Moreover, if you encounter a problem during a `make` command execution, reexecut
 
 ### About testing
 
-There are some `make` targets to test `Rothenberg`, specialy install and update of bundle and application.  
+There are some `make` targets to test `Rothenberg`, especially install and update of bundle and application.  
 To run them, just do `make tests`.  
 Please, do not omit to update tests before implemeting new feature or doing a bug fix.  
 To update tests, just update the content of the `references` directory.
@@ -313,5 +313,5 @@ To use it, just put it in a text file in (for example) your home and define it a
 ## Why `Rothenberg`?
 
 [David Rothenberg](http://www.davidrothenberg.net) is a book author and a song composer which has made music with whales.  
-This project uses `docker`, which has a whale as logo, and `composer`, `docker-compose` to set up a symfony environment.  
+This project uses `docker`, which has a whale as logo, and `composer`, `docker-compose` to set up a Symfony environment.  
 So, `Rothenberg` seems to be a good choice as name ;).
