@@ -308,3 +308,9 @@ To use it, just put it in a text file in (for example) your home and define it a
 - [*docker-compose*](https://docs.docker.com/compose/) ;
 - [*atoum*](http://docs.atoum.org) ;
 - [*make*](https://www.gnu.org/software/make/manual/make.html).
+
+## Why `Rothenberg`?
+
+[David Rothenberg](http://www.davidrothenberg.net) is a book author and a song composer which has made music with whales.  
+This project uses `docker`, which has a whale as logo, and `composer`, `docker-compose` to set up a symfony environment.  
+So, `Rothenberg` seems to be a good choice as name ;).
