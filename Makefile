@@ -50,7 +50,7 @@ endef
 
 docker/%: DOCKER_IMAGE ?= hub.docker.com/norsys/rothenberg
 docker/%: DOCKER_TAG ?= latest
-docker/%: DOCKER_BIN ?= $(call locate-binary,docker)
+docker/% test/%: DOCKER_BIN ?= $(call locate-binary,docker)
 
 .PHONY: docker/build
 docker/build:
@@ -70,7 +70,7 @@ tests-clean:
 tests: test/install/app test/install/bundle test/update/app test/update/bundle test/bad/target
 
 test/install/%:
-	docker system prune -f
+	$(DOCKER_BIN) system prune -f
 	$(eval $(check-repository))
 	$(call create-oracle,tests/cases/install/$*,tests/oracles/install/$*)
 	$(RM) tests/cases/install/$*/*
@@ -81,7 +81,7 @@ test/install/%:
 	@$(call assert,-z "$$(find . -not -uid $$(id -u))",All files are owned by current user for $@)
 
 test/update/%:
-	docker system prune -f
+	$(DOCKER_BIN) system prune -f
 	$(eval $(check-repository))
 	$(call create-oracle,tests/cases/update/$*,tests/oracles/update/$*)
 	$(MAKE) -C tests/cases/update/$* rothenberg/update
@@ -91,7 +91,7 @@ test/update/%:
 
 .PHONY: test/bad/target
 test/bad/target:
-	docker system prune -f
+	$(DOCKER_BIN) system prune -f
 	$(RM) tests/cases/bad/target
 	$(MKDIR) tests/cases/bad/target
 	$(eval $(check-repository))
