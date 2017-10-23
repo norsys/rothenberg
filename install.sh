@@ -12,7 +12,6 @@ if [ -z "$SSH_KEY" ]; then
 	SSH_KEY=id_rsa
 fi
 
-DOCKER_ACTION=
 DOCKER_IMAGE=norsys/rothenberg
 COMPOSER_VCS=
 DOCKER_VCS=
