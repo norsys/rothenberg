@@ -8,7 +8,14 @@ if [ -z "$VERSION" ]; then
 	VERSION=dev-master
 fi
 
-composer config repositories.norsys-rothenberg vcs $DOCKER_VCS
+if [ -z "$VERSION" ]; then
+	VERSION=dev-master
+fi
+
+if [ ! -z "$DOCKER_VCS" ]; then
+	composer config repositories.norsys-rothenberg vcs $DOCKER_VCS
+fi
+
 composer require --dev --ignore-platform-reqs --no-suggest norsys/rothenberg:$VERSION
 
 make -f vendor/norsys/rothenberg/install.mk install TARGET=$TARGET COMPOSER_BIN=$(which composer 2>/dev/null) PHP_BIN=$(which php 2>/dev/null)
