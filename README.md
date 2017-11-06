@@ -254,7 +254,14 @@ If you open an issue, describe your problem precisely and give maximum informati
 - Give output of `docker network ls` ;
 
 Moreover, if you encounter a problem during installation, reexecute it with `(export WITH_DEBUG=yes; wget -O - https://github.com/norsys/rothenberg/raw/master/install.sh | sh)`, and add the output to your issue.  
-And if you encounter a problem during a `make` command execution, reexecute it with `make <YOUR TARGET HERE> WITH_DEBUG=yes`, and add the output to your issue.
+And if you encounter a problem during a `make` command execution, reexecute it with `make <YOUR TARGET HERE> WITH_DEBUG=yes`, and add the output to your issue.  
+Finaly, you can join the channel `##rothenberg` on the IRC network `freenode`:
+
+1. Download an IRC client ;
+2. Configure it with your personal information ;
+3. Use it to [connect to the `freenode` network](https://freenode.net/kb/answer/chat) ;
+4. Do `/j ##rothenberg` ;
+5. Say `Hello!`.
 
 ## Contributing
 
