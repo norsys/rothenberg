@@ -8,8 +8,7 @@ RUN chmod 777 /rothenberg/*.sh
 RUN /rothenberg/composer.sh
 RUN mv composer.phar /usr/local/bin/composer
 RUN chmod 777 /usr/local/bin/composer
-ENV COMPOSER_HOME=/ COMPOSER_CACHE_DIR=/.composer/cache COMPOSER_ALLOW_SUPERUSER=1 SSH_KEY=id_rsa
-ENV GIT_SSH_COMMAND=ssh\ -i\ /.ssh/$SSH_KEY\ -o\ UserKnownHostsFile=/dev/null\ -o\ StrictHostKeyChecking=no
+ENV COMPOSER_HOME=/ COMPOSER_CACHE_DIR=/.composer/cache COMPOSER_ALLOW_SUPERUSER=1 SSH_KEY=id_rsa GIT_SSH_COMMAND=ssh\ -i\ /.ssh/$SSH_KEY\ -o\ UserKnownHostsFile=/dev/null\ -o\ StrictHostKeyChecking=no
 WORKDIR /src
 VOLUME [ "/src", "/.ssh", "/.composer", "/etc" ]
 CMD /rothenberg/rothenberg.sh
