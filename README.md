@@ -17,6 +17,12 @@ Or to use it in the context of a Symfony bundle, do:
 (export TARGET=bundle; wget -O - https://github.com/norsys/rothenberg/raw/master/install.sh | sh)
 ```
 
+`Rothenberg` use a docker image during the installation process. To be sure to use the last version of this image, prefix the above commands with `docker pull norsys/rothenberg`:
+
+```
+docker pull norsys/rothenberg && wget -O - https://github.com/norsys/rothenberg/raw/master/install.sh | sh
+```
+
 But… maybe you should read the following information before executing one of these commands!
 
 ## Features
