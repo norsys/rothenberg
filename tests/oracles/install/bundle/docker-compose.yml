@@ -26,8 +26,6 @@ services:
             - ./app/console.php:/src/bin/console # this mount-point MUST be done because composer use PHP binary to run post-(?:install|update) scripts, so it's not possible to use the docker-compose wrapper in this context.
             - ${COMPOSER_CACHE}:/.composer
         environment:
-            - PATH=/composer/bin:${PATH}
-            - COMPOSER_HOME=/composer/.composer
             - COMPOSER_CACHE_DIR=/.composer
             - COMPOSER_ALLOW_SUPERUSER=1
             - GIT_SSH_COMMAND=ssh -i ${SSH_KEY} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
