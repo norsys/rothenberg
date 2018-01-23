@@ -26,6 +26,8 @@ endif
 
 .DELETE_ON_ERROR:
 
+.PRECIOUS: composer.json
+
 # Implicit rules
 
 env/%: $(RESOURCES_DIR)/env/% | env
