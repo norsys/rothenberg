@@ -18,11 +18,11 @@ if (($argv[2] ?? 'app') == 'app') {
     $composerJson["extra"]["symfony-assets-install"] = "relative";
 
     $scripts = [ "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap", "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache" ];
-    $composerJson["scripts"]["post-install-cmd"] = array_unique(array_merge($composerJson["scripts"]["post-install-cmd"] ?? [], $scripts));
-    $composerJson["scripts"]["post-update-cmd"] = array_unique(array_merge($composerJson["scripts"]["post-update-cmd"] ?? [], $scripts));
+    $composerJson["scripts"]["post-install-cmd"] = array_values(array_unique(array_merge($composerJson["scripts"]["post-install-cmd"] ?? [], $scripts)));
+    $composerJson["scripts"]["post-update-cmd"] = array_values(array_unique(array_merge($composerJson["scripts"]["post-update-cmd"] ?? [], $scripts)));
 
     $composerJson["autoload"]["psr-4"][""] = "./src";
-    $composerJson["autoload"]["classmap"] = array_unique(array_merge($composerJson["autoload"]["classmap"] ?? [], [ "./app/AppKernel.php", "./app/AppCache.php" ]));
+    $composerJson["autoload"]["classmap"] = array_values(array_unique(array_merge($composerJson["autoload"]["classmap"] ?? [], [ "./app/AppKernel.php", "./app/AppCache.php" ])));
 
     $composerJson["autoload-dev"]["psr-4"]["AppBundle\\Tests\\Units\\"] = "./tests/units/src/AppBundle";
     $composerJson["autoload-dev"]["psr-4"]["AppBundle\\Tests\\Functionals\\"] = "./tests/functionals/bootstrap";
