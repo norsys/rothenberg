@@ -10,12 +10,11 @@ services:
             - ./env/nginx/default.conf:/etc/nginx/conf.d/default.conf
         depends_on:
             - php-fpm
-            - watchdog
         environment:
             - VIRTUAL_HOST=${VIRTUAL_HOST}
             - VIRTUAL_PORT=80
         networks:
-            - nginx-proxy # Link to nginx-proxy network, handled by `env/docker-compose.nginx-proxy.yml` and run by `make` at `start`, see the `networks` section below.
+            - rothenberg # Link to rothenberg network, handled by `env/docker-compose.rothenberg.yml` and run by `make` at `start`, see the `networks` section below.
             - default
 
     hosts:
@@ -34,7 +33,6 @@ services:
             - SYMFONY_DEBUG=${SYMFONY_DEBUG}
         volumes:
             - .:/src
-            - ./var/cache:/tmp
             - ./env/php/fpm.ini:/usr/local/etc/php/conf.d/host/php.ini
 
     php-cli:
@@ -47,7 +45,6 @@ services:
             - SYMFONY_DEBUG=${SYMFONY_DEBUG}
         volumes:
             - .:/src
-            - ./var/cache:/tmp
             - ./env/php/cli.ini:/usr/local/etc/php/conf.d/host/php.ini
 
     composer:
@@ -58,7 +55,6 @@ services:
             - ${SSH_KEY}:${SSH_KEY}:ro
             - ./composer.passwd:/etc/passwd
             - .:/src
-            - ./app/console.php:/src/bin/console # this mount-point MUST be done because composer use PHP binary to run post-(?:install|update) scripts, so it's not possible to use the docker-compose wrapper in this context.
             - ${COMPOSER_CACHE}:/.composer
         environment:
             - COMPOSER_CACHE_DIR=/.composer
@@ -76,25 +72,12 @@ services:
         environment:
             - SYMFONY_ENV=${SYMFONY_ENV}
 
-    # `extends` is unavaible in version 3 of docker-compose.yml, so we must duplicate the service instead of extends it :/.
-    # see https://github.com/docker/compose/issues/4315 for more informations
-    watchdog:
-        user: ${USER_ID}
-        image: node:7.10.1
-        working_dir: /src/env/node
-        volumes:
-            - ${USER_HOME}/.npm:/.npm
-            - .:/src
-        environment:
-            - SYMFONY_ENV=${SYMFONY_ENV}
-        command: "npm run build-watch"
-
     phantomjs:
         image: wernight/phantomjs:2.1.1
         entrypoint: phantomjs
         command: "--webdriver=8910"
 
 networks:
-    nginx-proxy:
+    rothenberg:
         external:
             name: ${NETWORK}_default

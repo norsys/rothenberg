@@ -33,7 +33,6 @@ services:
             - SYMFONY_DEBUG=${SYMFONY_DEBUG}
         volumes:
             - .:/src
-            - ./var/cache:/tmp
             - ./env/php/fpm.ini:/usr/local/etc/php/conf.d/host/php.ini
 
     php-cli:
@@ -46,7 +45,6 @@ services:
             - SYMFONY_DEBUG=${SYMFONY_DEBUG}
         volumes:
             - .:/src
-            - ./var/cache:/tmp
             - ./env/php/cli.ini:/usr/local/etc/php/conf.d/host/php.ini
 
     composer:
@@ -57,7 +55,6 @@ services:
             - ${SSH_KEY}:${SSH_KEY}:ro
             - ./composer.passwd:/etc/passwd
             - .:/src
-            - ./app/console.php:/src/bin/console # this mount-point MUST be done because composer use PHP binary to run post-(?:install|update) scripts, so it's not possible to use the docker-compose wrapper in this context.
             - ${COMPOSER_CACHE}:/.composer
         environment:
             - COMPOSER_CACHE_DIR=/.composer

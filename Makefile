@@ -78,7 +78,7 @@ test/install/%:
 	git -C tests/cases/install/$* add .
 	git -C tests/cases/install/$* diff --cached -- ':(exclude)composer.lock' > tests/cases/install/oracle.$*.diff
 	@$(call assert,! -s tests/cases/install/oracle.$*.diff,$@,cat tests/cases/install/oracle.$*.diff)
-	@$(call assert,-z "$$(find . -not -uid $$(id -u))",All files are owned by current user for $@)
+	@$(call assert,-z "$$(find tests/cases/install/$* -not -uid $$(id -u))",All files are owned by current user for $@)
 
 test/update/%:
 	$(DOCKER_BIN) system prune -f
@@ -88,7 +88,7 @@ test/update/%:
 	git -C tests/cases/update/$* add .
 	git -C tests/cases/update/$* diff -- `grep -lr '# This file MUST NOT be updated by Rothenberg' tests/cases/update/$* | grep -v vendor/norsys/rothenberg`':(exclude)composer.lock' > tests/cases/update/oracle.$*.diff
 	@$(call assert,! -s tests/cases/update/oracle.$*.diff,$@,cat tests/cases/update/oracle.$*.diff)
-	@$(call assert,-z "$$(find . -not -uid $$(id -u))",All files are owned by current user for $@)
+	@$(call assert,-z "$$(find tests/cases/update/$* -not -uid $$(id -u))",All files are owned by current user for $@)
 
 .PHONY: test/bad/target
 test/bad/target:

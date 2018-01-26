@@ -3,9 +3,9 @@
 THIS_FILE := $(lastword $(MAKEFILE_LIST))
 
 include env/utils.mk
-
 ifneq ("$(wildcard .install)","")
 include .install
+
 endif
 
 -include .rothenberg.config
@@ -127,9 +127,6 @@ bin/atoum: vendor/bin/atoum env/bin/bin.tpl | bin/docker-compose
 
 vendor/bin/atoum: | vendor/autoload.php
 
-tests/units/src:
-	$(MKDIR) $@
-
 ## Security
 
 .PHONY: security
@@ -163,10 +160,12 @@ vendor/bin/phpcbf: | vendor/autoload.php
 bin/console: app/console.php env/bin/bin.tpl | vendor/autoload.php bin/docker-compose
 	export BINARY=app/console.php; $(call export-file,env/bin/bin.tpl,$@); $(call executable,$@)
 
-vendor/autoload.php: composer.json env/bin/bin.tpl | bin/composer bin/docker-compose
+vendor/autoload.php: composer.json env/bin/bin.tpl | bin/composer
 	bin/composer install $(COMPOSER_OPTIONS)
 	for binary in $$(find vendor/bin -type l); do export BINARY=$$binary; $(call export-file,env/bin/bin.tpl,bin/$${binary##*/}); $(call executable,bin/$${binary##*/}); done
 
+tests/units/src:
+$(COMPOSER_CACHE):
 bin:
 	$(MKDIR) $@
 
@@ -177,9 +176,6 @@ bin/composer: $(THIS_FILE) | bin/docker-compose composer.passwd $(COMPOSER_CACHE
 
 composer.passwd:
 	echo "root:x:`id -u`:0:root:/root:/bin/sh" > $@
-
-$(COMPOSER_CACHE):
-	$(MKDIR) $@
 
 ## Git
 

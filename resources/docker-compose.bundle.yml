@@ -22,8 +22,6 @@ services:
             - ${SSH_KEY}:${SSH_KEY}:ro
             - ./composer.passwd:/etc/passwd
             - .:/src
-            - ./tmp:/tmp
-            - ./app/console.php:/src/bin/console # this mount-point MUST be done because composer use PHP binary to run post-(?:install|update) scripts, so it's not possible to use the docker-compose wrapper in this context.
             - ${COMPOSER_CACHE}:/.composer
         environment:
             - COMPOSER_CACHE_DIR=/.composer
