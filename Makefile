@@ -67,7 +67,7 @@ tests-clean:
 	$(RM) tests/cases
 
 .PHONY: tests
-tests: test/install/app test/install/bundle test/update/app test/update/bundle test/bad/target
+tests: test/install/app test/install/bundle test/update/app test/update/bundle test/bad/target test/rothenberg/update/uninstall
 
 test/install/%:
 	$(DOCKER_BIN) system prune -f
@@ -98,5 +98,15 @@ test/bad/target:
 	$(eval $(check-repository))
 	-export TARGET=foo VERSION=dev-$(GIT_BRANCH) SSH_KEY=$(SSH_KEY) && ./install.sh --build-docker-image --vcs=/vcs/rothenberg --directory=tests/cases/bad/target 2> tests/cases/bad/target/install.log
 	@$(call assert,"$$(tail -n 1 tests/cases/bad/target/install.log | grep -c 'Target foo is invalid!')" = '1',$@)
+
+.PHONY: test/rothenberg/update/uninstall
+test/rothenberg/update/uninstall:
+	$(DOCKER_BIN) system prune -f
+	$(RM) tests/cases/rothenberg/update/uninstall
+	$(MKDIR) tests/cases/rothenberg/update/uninstall
+	$(eval $(check-repository))
+	$(call create-oracle,tests/cases/rothenberg/update/uninstall,tests/oracles/rothenberg/update/uninstall)
+	-$(MAKE) -C tests/cases/rothenberg/update/uninstall rothenberg/update 2> tests/cases/rothenberg/update/uninstall.log
+	@$(call assert,"$$(tail -n 1 tests/cases/rothenberg/update/uninstall.log | grep -c 'Please install rothenberg before update it!')" = '1',$@)
 
 test/bad/target test/install/%: GIT_BRANCH ?= $(shell git -C $(realpath $(THIS_DIR)) rev-parse --abbrev-ref HEAD)

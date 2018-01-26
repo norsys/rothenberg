@@ -2,6 +2,8 @@
 
 THIS_FILE := $(lastword $(MAKEFILE_LIST))
 
+-include .rothenberg
+
 include env/utils.mk
 
 ifneq ("$(wildcard .install)","")
@@ -76,6 +78,7 @@ uninstall/%:
 ## Rothenberg
 
 .PHONY: rothenberg/update
+rothenberg/update:  TARGET ?= $(error Please install rothenberg before update it!`)
 rothenberg/update: | bin/composer
 	bin/composer update --no-suggest --no-scripts --ignore-platform-reqs norsys/rothenberg
 	$(MAKE) -f vendor/norsys/rothenberg/install.mk install # Can not be made via composer, because composer is running in a docker, so docker is unavailable and some post-(?:install|update) command not works
