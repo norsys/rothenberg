@@ -163,7 +163,7 @@ vendor/bin/phpcbf: | vendor/autoload.php
 bin/console: app/console.php env/bin/bin.tpl | vendor/autoload.php bin/docker-compose
 	export BINARY=app/console.php; $(call export-file,env/bin/bin.tpl,$@); $(call executable,$@)
 
-vendor/autoload.php: composer.json env/bin/bin.tpl | bin/composer bin/docker-compose
+vendor/autoload.php: composer.json env/bin/bin.tpl | bin/composer bin/console
 	bin/composer install $(COMPOSER_OPTIONS)
 	for binary in $$(find vendor/bin -type l); do export BINARY=$$binary; $(call export-file,env/bin/bin.tpl,bin/$${binary##*/}); $(call executable,bin/$${binary##*/}); done
 
