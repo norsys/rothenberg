@@ -21,10 +21,9 @@
     },
     "require": {
         "php": ">=7.0.0",
-        "symfony/symfony": "3.1.*",
-        "symfony/console": "3.1.*",
-        "sensio/distribution-bundle": "^5.0",
-        "sensio/framework-extra-bundle": "3.0.*"
+        "symfony/symfony": "3.4.*",
+        "sensio/framework-extra-bundle": "5.*",
+        "sensio/distribution-bundle": "5.*"
     },
     "extra": {
         "symfony-app-dir": "./app",

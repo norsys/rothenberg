@@ -27,10 +27,18 @@ if (($argv[2] ?? 'app') == 'app') {
     $composerJson["autoload-dev"]["psr-4"]["AppBundle\\Tests\\Units\\"] = "./tests/units/src/AppBundle";
     $composerJson["autoload-dev"]["psr-4"]["AppBundle\\Tests\\Functionals\\"] = "./tests/functionals/bootstrap";
 
-    $composerJson["require"]["symfony/symfony"] = "3.1.*";
-    $composerJson["require"]["symfony/console"] = "3.1.*";
-    $composerJson["require"]["sensio/distribution-bundle"] = "^5.0";
-    $composerJson["require"]["sensio/framework-extra-bundle"] = "3.0.*";
+
+    if( !isset( $composerJson["require"]["symfony/symfony"] )) {
+	    $composerJson["require"]["symfony/symfony"] = "3.4.*";
+    }
+
+    if( !isset( $composerJson["require"]["sensio/framework-extra-bundle"] )) {
+        $composerJson["require"]["sensio/framework-extra-bundle"] = "5.*";
+    }
+
+    if( !isset( $composerJson["require"]["sensio/distribution-bundle"] )) {
+        $composerJson["require"]["sensio/distribution-bundle"] = "5.*";
+    }
 
     $composerJson["require-dev"]["behat/behat"] = "~3.2";
     $composerJson["require-dev"]["behat/symfony2-extension"] = "^2.1";
