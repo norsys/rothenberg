@@ -68,6 +68,11 @@ export
 
 ## Implicit rules
 
+.PRECIOUS: %/.
+
+%/.:
+	$(MKDIR) $@
+
 bin/%: env/bin/% bin/docker-compose
 	$(call install,$@)
 
@@ -122,16 +127,13 @@ docker/status: | bin/docker-compose ## Display status of containers.
 ## Tests
 
 .PHONY: unit-tests
-unit-tests: bin/atoum | tests/units/src ## Run all unit tests.
+unit-tests: bin/atoum | tests/units/src/. ## Run all unit tests.
 	bin/atoum
 
 bin/atoum: vendor/bin/atoum env/bin/bin.tpl | bin/docker-compose
 	export BINARY=$< && $(call export-file,env/bin/bin.tpl,bin/atoum) && $(call executable,bin/atoum)
 
 vendor/bin/atoum: | vendor/autoload.php
-
-tests/units/src:
-	$(MKDIR) $@
 
 ## Security
 
@@ -166,23 +168,17 @@ vendor/bin/phpcbf: | vendor/autoload.php
 bin/console: app/console.php env/bin/bin.tpl | vendor/autoload.php bin/docker-compose
 	export BINARY=app/console.php; $(call export-file,env/bin/bin.tpl,$@); $(call executable,$@)
 
-vendor/autoload.php: composer.json env/bin/bin.tpl | bin/composer bin/console
+vendor/autoload.php: composer.json env/bin/bin.tpl | bin/composer bin/console var/.
 	bin/composer install $(COMPOSER_OPTIONS)
 	for binary in $$(find vendor/bin -type l); do export BINARY=$$binary; $(call export-file,env/bin/bin.tpl,bin/$${binary##*/}); $(call executable,bin/$${binary##*/}); done
 
-bin:
-	$(MKDIR) $@
-
 ## Composer
 
-bin/composer: $(THIS_FILE) | bin/docker-compose composer.passwd $(COMPOSER_CACHE)
+bin/composer: $(THIS_FILE) | bin/docker-compose composer.passwd $(COMPOSER_CACHE)/.
 	$(call install,$@)
 
 composer.passwd:
 	echo "root:x:`id -u`:0:root:/root:/bin/sh" > $@
-
-$(COMPOSER_CACHE):
-	$(MKDIR) $@
 
 ## Git
 

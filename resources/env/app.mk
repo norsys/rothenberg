@@ -41,7 +41,7 @@ var: var/sessions var/cache
 var/%:
 	$(MKDIR) $@
 
-bin/docker-compose: | bin .env
+bin/docker-compose: | bin/. .env
 	$(call install,$@)
 	$(NGINX_PROXY)
 
@@ -96,7 +96,7 @@ nginx: bin/docker-compose
 
 ## Node
 
-bin/npm bin/node: | bin
+bin/npm bin/node: | bin/.
 	$(call install,$@)
 
 bin/node: | env/node
