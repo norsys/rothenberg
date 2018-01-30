@@ -63,10 +63,10 @@ tests/units/%: $(RESOURCES_DIR)/tests/units/% | tests/units
 env/php/%.ini: | env/php
 	$(CP) $(RESOURCES_DIR)/$@ $@
 
-.gitignore: $(RESOURCES_DIR)/.gitignore.$(TARGET)
+.gitignore: $(RESOURCES_DIR)/git/ignore.$(TARGET)
 	$(call merge-file,$@,$<)
 
-.git%: $(RESOURCES_DIR)/.git%
+.git%: $(RESOURCES_DIR)/git/%
 	$(call merge-file,$@,$<)
 
 bin/%: env/Makefile
