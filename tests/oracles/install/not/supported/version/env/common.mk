@@ -69,13 +69,9 @@ export
 ## Implicit rules
 
 .PRECIOUS: %/.
+
 %/.:
 	$(MKDIR) $@
-
-# prevents conflict between %/. and bin/% for bin/.
-.PRECIOUS: bin/.
-bin/.:
-	$(MKDIR) bin
 
 bin/%: env/bin/% bin/docker-compose
 	$(call install,$@)

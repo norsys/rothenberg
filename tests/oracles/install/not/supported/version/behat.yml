@@ -1,0 +1,28 @@
+aliases:
+    - &phantomjs_host phantom-js:8910/wd/hub
+
+default:
+    autoload:
+        '': '%paths.base%/../../tests/functionals/bootstrap'
+    suites:
+        web:
+            paths:
+                - '%paths.base%/../../tests/functionals/features/web'
+            contexts:
+                - Tests\Functionals\WebContext:
+                    session: '@session'
+    extensions:
+        Behat\Symfony2Extension:
+            kernel:
+                env: prod
+        Behat\MinkExtension:
+            base_url: http://nginx
+            selenium2:
+                wd_host: *phantomjs_host
+
+phantomjs:
+    extensions:
+        Behat\MinkExtension:
+            base_url: http://nginx
+            selenium2:
+                wd_host: *phantomjs_host

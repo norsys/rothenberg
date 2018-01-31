@@ -1,0 +1,73 @@
+#!/bin/bash
+#
+# Run docker-compose in a container
+#
+# This script will attempt to mirror the host paths by using volumes for the
+# following paths:
+#   * $(pwd)
+#   * $(dirname $COMPOSE_FILE) if it's set
+#   * $HOME if it's set
+#
+# You can add additional volumes (or any docker run options) using
+# the $COMPOSE_OPTIONS environment variable.
+#
+
+# Workaround to avoid error "Credentials store error: StoreError('docker-credential-osxkeychain not installed or not available in PATH',)" on OSX.
+# This root cause of this error is that the user's home directory is mounted by Docker for Mac, so the docker-compose binary executed by docker read `~/.docker/config.json`.
+# However, in the docker-compose image, `docker-credential-osxkeychain` is unavailable.
+# So, if `~/.docker/config.json` contains `"credsStore": "osxkeychain"`, docker-compose throw this exception, sadly.
+DOCKER_COMPOSE_ON_HOST=$(which docker-compose 2>/dev/null)
+
+# Exit on error, must be done here to avoid premature exit if the previous `which` can't find `docker-compose` in $PATH
+set -e
+
+if [ ! -z "$DOCKER_COMPOSE_ON_HOST" ]; then
+	exec $DOCKER_COMPOSE_ON_HOST "$@"
+else
+	if [ -S "$DOCKER_COMPOSE_VERSION" ]; then
+		VERSION="$DOCKER_COMPOSE_VERSION"
+	else
+		VERSION="1.16.0"
+	fi
+
+	if [ -S "$DOCKER_COMPOSE_IMAGE" ]; then
+		IMAGE="$DOCKER_COMPOSE_IMAGE:$VERSION"
+	else
+		IMAGE="docker/compose:$VERSION"
+	fi
+
+# Setup options for connecting to docker host
+	if [ -z "$DOCKER_HOST" ]; then
+		DOCKER_HOST="/var/run/docker.sock"
+	fi
+	if [ -S "$DOCKER_HOST" ]; then
+		DOCKER_ADDR="-v $DOCKER_HOST:$DOCKER_HOST -e DOCKER_HOST"
+	else
+		DOCKER_ADDR="-e DOCKER_HOST -e DOCKER_TLS_VERIFY -e DOCKER_CERT_PATH"
+	fi
+
+# Setup volume mounts for compose config and context
+	if [ "$(pwd)" != '/' ]; then
+		VOLUMES="-v $(pwd):$(pwd)"
+	fi
+	if [ -n "$COMPOSE_FILE" ]; then
+		compose_dir=$(realpath $(dirname $COMPOSE_FILE))
+	fi
+# TODO: also check --file argument
+	if [ -n "$compose_dir" ]; then
+		VOLUMES="$VOLUMES -v $compose_dir:$compose_dir"
+	fi
+	if [ -n "$HOME" ]; then
+		VOLUMES="$VOLUMES -v $HOME:$HOME -v $HOME:/root" # mount $HOME in /root to share docker.config
+	fi
+
+# Only allocate tty if we detect one
+	if [ -t 1 ]; then
+		DOCKER_RUN_OPTIONS="-t"
+	fi
+	if [ -t 0 ]; then
+		DOCKER_RUN_OPTIONS="$DOCKER_RUN_OPTIONS -i"
+	fi
+
+	exec docker run --rm $DOCKER_RUN_OPTIONS $DOCKER_ADDR $COMPOSE_OPTIONS $VOLUMES -w "$(pwd)" $IMAGE "$@"
+fi
