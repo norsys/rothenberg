@@ -77,7 +77,7 @@ export
 bin/.:
 	$(MKDIR) bin
 
-bin/%: env/bin/% bin/docker-compose
+bin/%: env/bin/% | bin/docker-compose
 	$(call install,$@)
 
 .PHONY: uninstall/%
