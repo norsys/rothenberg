@@ -15,7 +15,7 @@ tmp:
 
 ## Docker
 
-bin/docker-compose: | bin .env
+bin/docker-compose: | bin/. .env
 	$(call install,$@)
 
 .env: env/.env.dist $(SSH_KEY) | $(COMPOSER_CACHE)

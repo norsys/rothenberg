@@ -77,7 +77,7 @@ export
 bin/.:
 	$(MKDIR) bin
 
-bin/%: env/bin/% bin/docker-compose
+bin/%: env/bin/% | bin/docker-compose
 	$(call install,$@)
 
 .PHONY: uninstall/%
@@ -121,7 +121,8 @@ ifneq ($(WITH_DOCKER_PULL),yes)
 docker/pull:
 else
 docker/pull: | bin/docker-compose
-	bin/docker-compose pull
+	# Add `--ignore-pull-failures` to avoid error ` pull access denied for …, repository does not exist or may require 'docker login'`, see https://github.com/docker/compose/issues/5478.
+	bin/docker-compose pull --ignore-pull-failures
 endif
 
 .PHONY: docker/status
