@@ -2,6 +2,8 @@
 
 THIS_FILE := $(lastword $(MAKEFILE_LIST))
 
+-include .rothenberg
+
 include env/utils.mk
 
 ifneq ("$(wildcard .install)","")
@@ -66,7 +68,16 @@ export
 
 ## Implicit rules
 
-bin/%: env/bin/% bin/docker-compose
+.PRECIOUS: %/.
+%/.:
+	$(MKDIR) $@
+
+# prevents conflict between %/. and bin/% for bin/.
+.PRECIOUS: bin/.
+bin/.:
+	$(MKDIR) bin
+
+bin/%: env/bin/% | bin/docker-compose
 	$(call install,$@)
 
 .PHONY: uninstall/%
@@ -76,6 +87,7 @@ uninstall/%:
 ## Rothenberg
 
 .PHONY: rothenberg/update
+rothenberg/update:  TARGET ?= $(error Please install rothenberg before update it!`)
 rothenberg/update: | bin/composer
 	bin/composer update --no-suggest --no-scripts --ignore-platform-reqs norsys/rothenberg
 	$(MAKE) -f vendor/norsys/rothenberg/install.mk install # Can not be made via composer, because composer is running in a docker, so docker is unavailable and some post-(?:install|update) command not works
@@ -109,7 +121,8 @@ ifneq ($(WITH_DOCKER_PULL),yes)
 docker/pull:
 else
 docker/pull: | bin/docker-compose
-	bin/docker-compose pull
+	# Add `--ignore-pull-failures` to avoid error ` pull access denied for …, repository does not exist or may require 'docker login'`, see https://github.com/docker/compose/issues/5478.
+	bin/docker-compose pull --ignore-pull-failures
 endif
 
 .PHONY: docker/status
@@ -119,16 +132,13 @@ docker/status: | bin/docker-compose ## Display status of containers.
 ## Tests
 
 .PHONY: unit-tests
-unit-tests: bin/atoum | tests/units/src ## Run all unit tests.
+unit-tests: bin/atoum | tests/units/src/. ## Run all unit tests.
 	bin/atoum
 
 bin/atoum: vendor/bin/atoum env/bin/bin.tpl | bin/docker-compose
 	export BINARY=$< && $(call export-file,env/bin/bin.tpl,bin/atoum) && $(call executable,bin/atoum)
 
 vendor/bin/atoum: | vendor/autoload.php
-
-tests/units/src:
-	$(MKDIR) $@
 
 ## Security
 
@@ -163,23 +173,17 @@ vendor/bin/phpcbf: | vendor/autoload.php
 bin/console: app/console.php env/bin/bin.tpl | vendor/autoload.php bin/docker-compose
 	export BINARY=app/console.php; $(call export-file,env/bin/bin.tpl,$@); $(call executable,$@)
 
-vendor/autoload.php: composer.json env/bin/bin.tpl | bin/composer bin/docker-compose
+vendor/autoload.php: composer.json env/bin/bin.tpl | bin/composer var/.
 	bin/composer install $(COMPOSER_OPTIONS)
 	for binary in $$(find vendor/bin -type l); do export BINARY=$$binary; $(call export-file,env/bin/bin.tpl,bin/$${binary##*/}); $(call executable,bin/$${binary##*/}); done
 
-bin:
-	$(MKDIR) $@
-
 ## Composer
 
-bin/composer: $(THIS_FILE) | bin/docker-compose composer.passwd $(COMPOSER_CACHE)
+bin/composer: $(THIS_FILE) | bin/docker-compose composer.passwd $(COMPOSER_CACHE)/.
 	$(call install,$@)
 
 composer.passwd:
 	echo "root:x:`id -u`:0:root:/root:/bin/sh" > $@
-
-$(COMPOSER_CACHE):
-	$(MKDIR) $@
 
 ## Git
 

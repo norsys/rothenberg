@@ -41,7 +41,7 @@ var: var/sessions var/cache
 var/%:
 	$(MKDIR) $@
 
-bin/docker-compose: | bin .env
+bin/docker-compose: | bin/. .env
 	$(call install,$@)
 	$(NGINX_PROXY)
 
