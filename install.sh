@@ -57,8 +57,8 @@ if [ -z "$SYMFONY_VERSION" ]; then
 	SYMFONY_VERSION="^3.4"
 fi
 
-if [ $(echo "$SYMFONY_VERSION >= 4" | bc) -eq "1" ]; then
-	echo Symfony 4 not yet supported, please install as default for the last LTS supported aka 3.4
+if echo "$SYMFONY_VERSION" | grep -Eq "^[0-9]+(.[0-9]+)*$" && ! echo "$SYMFONY_VERSION" | grep -Eq "^([456789][0-9]*|[1-9][0-9]+|[0-2]).?"; then
+	echo Symfony version lesser or greater than 3 is not currently supported
 	exit
 fi
 

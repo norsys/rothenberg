@@ -70,8 +70,8 @@ tests-clean:
 tests: test/install/app test/install/bundle test/update/app test/update/bundle test/bad/target test/rothenberg/update/uninstall test/install/not/supported/version
 
 test/install/%:
-	$(DOCKER_BIN) system prune -f
 	$(eval $(check-repository))
+	$(DOCKER_BIN) system prune -f
 	$(call create-oracle,tests/cases/install/$*,tests/oracles/install/$*)
 	$(RM) tests/cases/install/$*/*
 	export TARGET=$(notdir $@) VERSION=dev-$(GIT_BRANCH) SSH_KEY=$(SSH_KEY) && ./install.sh --build-docker-image --vcs=/vcs/rothenberg --directory=tests/cases/install/$*
@@ -81,8 +81,8 @@ test/install/%:
 	@$(call assert,-z "$$(find tests/cases/install/$* -not -uid $$(id -u))",All files are owned by current user for $@)
 
 test/update/%:
-	$(DOCKER_BIN) system prune -f
 	$(eval $(check-repository))
+	$(DOCKER_BIN) system prune -f
 	$(call create-oracle,tests/cases/update/$*,tests/oracles/update/$*)
 	$(MAKE) -C tests/cases/update/$* rothenberg/update
 	git -C tests/cases/update/$* add .
@@ -92,29 +92,29 @@ test/update/%:
 
 .PHONY: test/bad/target
 test/bad/target:
+	$(eval $(check-repository))
 	$(DOCKER_BIN) system prune -f
 	$(RM) tests/cases/bad/target
 	$(MKDIR) tests/cases/bad/target
-	$(eval $(check-repository))
 	-export TARGET=foo VERSION=dev-$(GIT_BRANCH) SSH_KEY=$(SSH_KEY) && ./install.sh --build-docker-image --vcs=/vcs/rothenberg --directory=tests/cases/bad/target 2> tests/cases/bad/target/install.log
 	@$(call assert,"$$(tail -n 1 tests/cases/bad/target/install.log | grep -c 'Target foo is invalid!')" = '1',$@)
 
 .PHONY: test/rothenberg/update/uninstall
 test/rothenberg/update/uninstall:
+	$(eval $(check-repository))
 	$(DOCKER_BIN) system prune -f
 	$(RM) tests/cases/rothenberg/update/uninstall
 	$(MKDIR) tests/cases/rothenberg/update/uninstall
-	$(eval $(check-repository))
 	$(call create-oracle,tests/cases/rothenberg/update/uninstall,tests/oracles/rothenberg/update/uninstall)
 	-$(MAKE) -C tests/cases/rothenberg/update/uninstall rothenberg/update 2> tests/cases/rothenberg/update/uninstall.log
 	@$(call assert,"$$(tail -n 1 tests/cases/rothenberg/update/uninstall.log | grep -c 'Please install rothenberg before update it!')" = '1',$@)
 
 .PHONY: test/install/not/supported/version
 test/install/not/supported/version:
+	$(eval $(check-repository))
 	$(DOCKER_BIN) system prune -f
 	$(RM) tests/cases/install/not/supported/version
 	$(MKDIR) tests/cases/install/not/supported/version
-	$(eval $(check-repository))
 	$(call create-oracle,tests/cases/install/not/supported/version,tests/oracles/install/not/supported/version)
 	export TARGET=$(notdir $@) VERSION=dev-$(GIT_BRANCH) SSH_KEY=$(SSH_KEY) && ./install.sh --build-docker-image --vcs=/vcs/rothenberg --directory=tests/cases/install/not/supported/version --symfony-version=4 > tests/cases/install/not/supported/version/version.log
 	@$(call assert, "$$(tail -n 1 tests/cases/install/not/supported/version/version.log | grep -c 'Symfony 4 not yet supported, please install as default for the last LTS supported aka 3.4')" = '1', $@)
