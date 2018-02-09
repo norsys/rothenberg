@@ -41,7 +41,7 @@ var: var/sessions var/cache
 var/%:
 	$(MKDIR) $@
 
-bin/docker-compose: | bin .env
+bin/docker-compose: | bin/. .env
 	$(call install,$@)
 	$(NGINX_PROXY)
 
@@ -49,7 +49,8 @@ $(NPM_CACHE):
 	$(MKDIR) $@
 
 .env: env/.env.dist $(firstword $(MAKEFILE_LIST)) $(SSH_KEY) | $(COMPOSER_CACHE) $(NPM_CACHE)
-	if [ -x bin/docker-compose ]; then bin/docker-compose down; fi
+	$(RM) var/cache
+	if [ -x bin/docker-compose -a -f .env ]; then bin/docker-compose down; fi
 	export ETC=$(ETC) USER_HOME=$(HOME) USER_ID=$(USER_ID) SYMFONY_ENV=$(SYMFONY_ENV) SSH_KEY=$(SSH_KEY) VIRTUAL_HOST=$(VIRTUAL_HOST) HOSTS_ETC=$(HOSTS_ETC) NPM_CACHE=$(NPM_CACHE) COMPOSER_CACHE=$(COMPOSER_CACHE) NETWORK=$(ROTHENBERG_NETWORK) ENV=$(ENV) SYMFONY_DEBUG=$(SYMFONY_DEBUG) && $(call export-file,$<,$@)
 
 vendor/autoload.php: composer.lock
@@ -96,7 +97,7 @@ nginx: bin/docker-compose
 
 ## Node
 
-bin/npm bin/node: | bin
+bin/npm bin/node: | bin/.
 	$(call install,$@)
 
 bin/node: | env/node
