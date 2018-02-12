@@ -22,6 +22,7 @@ services:
             - ${SSH_KEY}:${SSH_KEY}:ro
             - ./composer.passwd:/etc/passwd
             - .:/src
+            - ./app/console.php:/src/bin/console
             - ${COMPOSER_CACHE}:/.composer
         environment:
             - COMPOSER_CACHE_DIR=/.composer

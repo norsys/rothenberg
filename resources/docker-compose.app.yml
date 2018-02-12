@@ -56,6 +56,7 @@ services:
             - ./composer.passwd:/etc/passwd
             - .:/src
             - ${COMPOSER_CACHE}:/.composer
+            - ./app/console.php:/src/bin/console
         environment:
             - COMPOSER_CACHE_DIR=/.composer
             - COMPOSER_ALLOW_SUPERUSER=1
