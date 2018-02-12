@@ -6,6 +6,7 @@ SSH_KEY ?= id_rsa
 RM := $(RM) -r
 MKDIR := mkdir -p
 CP := cp -r
+MV := mv -f
 
 REPOSITORY_STATUS := $(shell git status --porcelain | wc -l)
 
@@ -21,6 +22,8 @@ define create-oracle
 $(RM) $1
 $(MKDIR) $(dir $1)
 $(CP) $2 $1
+sed -e "s#\"norsys/rothenberg\": \"dev-[^\"]*\"#\"norsys/rothenberg\": \"dev-$$(git rev-parse --abbrev-ref HEAD)\"#g" $1/composer.json > $1/composer.json.oracle
+$(MV) $1/composer.json.oracle $1/composer.json
 git -C $1 init
 git -C $1 add .
 git -C $1 commit -m "Oracle creation."
@@ -117,6 +120,6 @@ test/install/not/supported/version:
 	$(MKDIR) tests/cases/install/not/supported/version
 	$(call create-oracle,tests/cases/install/not/supported/version,tests/oracles/install/not/supported/version)
 	export TARGET=$(notdir $@) VERSION=dev-$(GIT_BRANCH) SSH_KEY=$(SSH_KEY) && ./install.sh --build-docker-image --vcs=/vcs/rothenberg --directory=tests/cases/install/not/supported/version --symfony-version=4 > tests/cases/install/not/supported/version/version.log
-	@$(call assert, "$$(tail -n 1 tests/cases/install/not/supported/version/version.log | grep -c 'Symfony 4 not yet supported, please install as default for the last LTS supported aka 3.4')" = '1', $@)
+	@$(call assert, "$$(tail -n 1 tests/cases/install/not/supported/version/version.log | grep -c 'Symfony version lesser or greater than 3 is not currently supported.')" = '1', $@)
 
 test/bad/target test/install/%: GIT_BRANCH ?= $(shell git -C $(realpath $(THIS_DIR)) rev-parse --abbrev-ref HEAD)

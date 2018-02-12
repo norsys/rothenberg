@@ -55,10 +55,8 @@ done
 
 if [ -z "$SYMFONY_VERSION" ]; then
 	SYMFONY_VERSION="^3.4"
-fi
-
-if echo "$SYMFONY_VERSION" | grep -Eq "^[0-9]+(.[0-9]+)*$" && ! echo "$SYMFONY_VERSION" | grep -Eq "^([456789][0-9]*|[1-9][0-9]+|[0-2]).?"; then
-	echo Symfony version lesser or greater than 3 is not currently supported
+elif [[ $(echo "$SYMFONY_VERSION" | grep -E '^[0-9]+(.[0-9]+)*$' | grep -vE '^([456789][0-9]*|[1-9][0-9]+|[0-2]).?') != "$SYMFONY_VERSION" ]]; then
+	echo "Symfony version lesser or greater than 3 is not currently supported."
 	exit
 fi
 
