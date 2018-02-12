@@ -15,6 +15,7 @@ include $(ROTHENBERG_EXISTS)
 endif
 
 TARGET ?= app
+SYMFONY_VERSION ?= "^3.4"
 
 ifeq ($(filter $(TARGET),app bundle),)
 $(error Target $(TARGET) is invalid!);
@@ -159,7 +160,7 @@ install/symfony: install/php composer.json | src
 install/symfony/app: app/console.php web/app.php web/apple-touch-icon.png web/favicon.ico web/robots.txt
 
 composer.json: $(RESOURCES_DIR)/composer.json.php | $(PHP_BIN) $(COMPOSER_BIN)
-	$(PHP_BIN) -f $(RESOURCES_DIR)/composer.json.php -- $(COMPOSER_JSON_PATH) $(TARGET)
+	$(PHP_BIN) -f $(RESOURCES_DIR)/composer.json.php -- $(COMPOSER_JSON_PATH) $(TARGET) $(SYMFONY_VERSION)
 	$(COMPOSER_BIN) update --lock --no-scripts --ignore-platform-reqs --no-suggest
 
 ifeq ($(TARGET),app)

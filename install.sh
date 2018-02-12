@@ -41,6 +41,9 @@ while [ "$1" != "" ]; do
 		--target)
 			TARGET=$VALUE
 			;;
+		--symfony-version)
+			SYMFONY_VERSION=$VALUE
+			;;
 		*)
 			echo "ERROR: unknown parameter \"$PARAM\""
 			exit 1
@@ -49,6 +52,13 @@ while [ "$1" != "" ]; do
 
 	shift
 done
+
+if [ -z "$SYMFONY_VERSION" ]; then
+	SYMFONY_VERSION="^3.4"
+elif [[ $(echo "$SYMFONY_VERSION" | grep -E '^[0-9]+(.[0-9]+)*$' | grep -vE '^([456789][0-9]*|[1-9][0-9]+|[0-2]).?') != "$SYMFONY_VERSION" ]]; then
+	echo "Symfony version lesser or greater than 3 is not currently supported."
+	exit
+fi
 
 if [ -z "$TARGET" ]; then
 	TARGET=app
@@ -77,4 +87,4 @@ cd $INSTALL_DIRECTORY
 
 echo "root:x:$(id -u):0:root:/root:/bin/sh" > $(pwd)/passwd
 
-docker run --rm -v $(pwd):/src -v $HOME/.ssh:/.ssh -v $HOME/.composer:/.composer -v $(pwd)/passwd:/etc/passwd $COMPOSER_VCS -u $(id -u) -e TARGET=$TARGET -e VERSION=$VERSION -e SSH_KEY=$SSH_KEY -e DOCKER_VCS=$DOCKER_VCS -e WITH_DEBUG=$WITH_DEBUG $DOCKER_IMAGE
+docker run --rm -v $(pwd):/src -v $HOME/.ssh:/.ssh -v $HOME/.composer:/.composer -v $(pwd)/passwd:/etc/passwd $COMPOSER_VCS -u $(id -u) -e TARGET=$TARGET -e VERSION=$VERSION -e SSH_KEY=$SSH_KEY -e DOCKER_VCS=$DOCKER_VCS -e SYMFONY_VERSION=$SYMFONY_VERSION -e WITH_DEBUG=$WITH_DEBUG $DOCKER_IMAGE

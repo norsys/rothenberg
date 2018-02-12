@@ -29,11 +29,11 @@ if (($argv[2] ?? 'app') == 'app') {
 
 
     if( !isset( $composerJson["require"]["symfony/symfony"] )) {
-	    $composerJson["require"]["symfony/symfony"] = "3.4.*";
+	    $composerJson["require"]["symfony/symfony"] = $argv[3];
     }
 
     if( !isset( $composerJson["require"]["sensio/framework-extra-bundle"] )) {
-        $composerJson["require"]["sensio/framework-extra-bundle"] = "5.*";
+        $composerJson["require"]["sensio/framework-extra-bundle"] = "*";
     }
 
     if( !isset( $composerJson["require"]["sensio/distribution-bundle"] )) {
