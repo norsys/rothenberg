@@ -11,20 +11,29 @@ services:
             - SYMFONY_DEBUG=${SYMFONY_DEBUG}
         volumes:
             - .:/src
-            # @TODO check if it is not useless to use this PHP configuration file
-            #- ./env/php/cli.ini:/usr/local/etc/php/conf.d/host/php.ini
+            - ./env/php/cli.ini:/usr/local/etc/php/conf.d/host/php.ini
+            - ./app/console.php:/src/bin/console
 
     composer:
-        user: ${USER_ID}
-        image: composer:1.4.2
-        working_dir: /src
-        volumes:
-            - ${SSH_KEY}:${SSH_KEY}:ro
-            - ./composer.passwd:/etc/passwd
-            - .:/src
-            - ${COMPOSER_CACHE}:/.composer
+        extends:
+            service: php-cli
+        depends_on:
+            - composer-binaries
         environment:
             - COMPOSER_CACHE_DIR=/.composer
             - COMPOSER_ALLOW_SUPERUSER=1
             - GIT_SSH_COMMAND=ssh -i ${SSH_KEY} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
-            - SYMFONY_ENV=${SYMFONY_ENV}
+        volumes:
+            - composer-binaries:/bin/composer
+            - ${SSH_KEY}:${SSH_KEY}:ro
+            - ./composer.passwd:/etc/passwd
+            - ${COMPOSER_CACHE}:/.composer
+
+    composer-binaries:
+        user: ${USER_ID}
+        image: composer:1.4.2
+        volumes:
+            - composer-binaries:/usr/bin
+
+volumes:
+    composer-binaries:
