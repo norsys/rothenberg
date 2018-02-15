@@ -24,7 +24,8 @@ services:
             - COMPOSER_ALLOW_SUPERUSER=1
             - GIT_SSH_COMMAND=ssh -i ${SSH_KEY} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
         volumes:
-            - composer-binaries:/bin/composer
+            - composer-binaries-usr:/bin/composer/usr
+            - composer-binaries-bin:/bin/composer/bin
             - ${SSH_KEY}:${SSH_KEY}:ro
             - ./composer.passwd:/etc/passwd
             - ${COMPOSER_CACHE}:/.composer
@@ -33,7 +34,9 @@ services:
         user: ${USER_ID}
         image: composer:1.4.2
         volumes:
-            - composer-binaries:/usr/bin
+            - composer-binaries-usr:/usr/bin
+            - composer-binaries-bin:/bin
 
 volumes:
-    composer-binaries:
+    composer-binaries-usr:
+    composer-binaries-bin:
