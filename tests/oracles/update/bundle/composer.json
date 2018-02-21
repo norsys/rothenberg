@@ -1,8 +1,8 @@
 {
     "repositories": {
         "norsys-rothenberg": {
-            "type": "vcs",
-            "url": "/vcs/rothenberg"
+            "type": "path",
+            "url": "/norsys-rothenberg"
         }
     },
     "require-dev": {

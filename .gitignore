@@ -1,4 +1,5 @@
 tests/cases/*
+tests/norsys-rothenberg
 references/install/app/.git
 references/install/bundle/.git
 references/update/app/.git

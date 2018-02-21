@@ -32,6 +32,10 @@ while [ "$1" != "" ]; do
 			COMPOSER_VCS="-v $SCRIPT_DIRECTORY:$VALUE"
 			DOCKER_VCS=$VALUE
 			;;
+		--artifact)
+			COMPOSER_ARTIFACT="-v $SCRIPT_DIRECTORY/tests/artifacts:$VALUE"
+			DOCKER_ARTIFACT=$VALUE
+			;;
 		--image)
 			DOCKER_IMAGE=$VALUE
 			;;
@@ -87,4 +91,4 @@ cd $INSTALL_DIRECTORY
 
 echo "root:x:$(id -u):0:root:/root:/bin/sh" > $(pwd)/passwd
 
-docker run --rm -v $(pwd):/src -v $HOME/.ssh:/.ssh -v $HOME/.composer:/.composer -v $(pwd)/passwd:/etc/passwd $COMPOSER_VCS -u $(id -u) -e TARGET=$TARGET -e VERSION=$VERSION -e SSH_KEY=$SSH_KEY -e DOCKER_VCS=$DOCKER_VCS -e SYMFONY_VERSION=$SYMFONY_VERSION -e WITH_DEBUG=$WITH_DEBUG $DOCKER_IMAGE
+docker run --rm -v $(pwd):/src -v $HOME/.ssh:/.ssh -v $HOME/.composer:/.composer -v $(pwd)/passwd:/etc/passwd $COMPOSER_VCS $COMPOSER_ARTIFACT -u $(id -u) -e TARGET=$TARGET -e VERSION=$VERSION -e SSH_KEY=$SSH_KEY -e DOCKER_VCS=$DOCKER_VCS -e DOCKER_ARTIFACT=$DOCKER_ARTIFACT -e SYMFONY_VERSION=$SYMFONY_VERSION -e WITH_DEBUG=$WITH_DEBUG $DOCKER_IMAGE

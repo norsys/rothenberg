@@ -4,5 +4,5 @@ version: '2.1'
 services:
     composer:
         volumes:
-            - ../../../../:/vcs/rothenberg
+            - ../../../../tests/norsys-rothenberg:/norsys-rothenberg
 
