@@ -145,7 +145,7 @@ You can install `Rothenberg` in a new project or in an existing one.
 For example, if your project is an application located in `path/to/project`:
 
 1. `cd path/to/project` ;
-2. Do `wget -O - https://github.com/norsys/rothenberg/raw/bundle/install.sh | sh`.
+2. Do `wget -O - https://github.com/norsys/rothenberg/raw/master/install.sh | sh`.
 
 Once the install is done, if you already have a `./Makefile`, just add `include env/Makefile` in it to profit of `Rothenberg`'s targets.  
 You can also define `VIRTUAL_HOST` variable before including `env/Makefile` (see above for more informations).  
@@ -155,7 +155,7 @@ Finaly, do `make start` to download PHP depedencies and start services.
 ### For a bundle
 
 1. `cd path/to/project` ;
-2. Do `(export TARGET=bundle; wget -O - https://github.com/norsys/rothenberg/raw/bundle/install.sh | sh)`.
+2. Do `(export TARGET=bundle; wget -O - https://github.com/norsys/rothenberg/raw/master/install.sh | sh)`.
 
 Once the install is done, if you already have a `./Makefile`, just add `include env/Makefile` in it to profit of `Rothenberg`'s targets.  
 Moreover, you can edit [`./docker-compose.override.yml`](https://docs.docker.com/compose/extends/#understanding-multiple-compose-files) to add specific `docker` services or networks.
