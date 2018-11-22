@@ -1,11 +1,13 @@
 # Rothenberg
 
-`Rothenberg` allows a developper to create or maintain a Symfony application or a Symfony bundle very easily and without install something on his workstation (Mac or PC, Windows is not currently supported).  
+`Rothenberg` allows a developer to create or maintain a Symfony application or bundle very easily and without installing anything on his workstation (Mac or PC, Windows is not currently supported).  
 It is not a standalone project, so it must be used in the context of an another project.
 
 ## TL;DR
 
-If you have an UNIX operating system and `docker`, `GNU make` and an Internet access, to use `Rothenberg` to develop or maintain a Symfony application, execute the following command in a terminal:
+You must have an UNIX operating system, `docker`, `GNU make` and an Internet access to use `Rothenberg`.
+
+To develop or maintain a Symfony application, execute the following command in a terminal:
 
 ```
 wget -O - https://github.com/norsys/rothenberg/raw/master/install.sh | sh
@@ -17,7 +19,7 @@ Or to use it in the context of a Symfony bundle, do:
 (export TARGET=bundle; wget -O - https://github.com/norsys/rothenberg/raw/master/install.sh | sh)
 ```
 
-`Rothenberg` use a docker image during the installation process. To be sure to use the last version of this image, prefix the above commands with `docker pull norsys/rothenberg`:
+`Rothenberg` use a docker image during the installation process. To be sure to use the latest version of this image, prefix the above commands with `docker pull norsys/rothenberg`:
 
 ```
 docker pull norsys/rothenberg && wget -O - https://github.com/norsys/rothenberg/raw/master/install.sh | sh
@@ -32,18 +34,18 @@ In the following, we assume that the command `make -f vendor/norsys/rothenberg/M
 ### Docker and docker-compose configuration
 
 `Rothenberg` creates a `docker-compose.yml` with some services pre-configured and an empty `docker-compose.override.yml` (only if this file does not exist) in the directory `path/to/project`.  
-If you want to override some services's configuration, use [`docker-compose.override.yml`](https://docs.docker.com/compose/extends/#understanding-multiple-compose-files).
+If you want to override some services configuration, use [`docker-compose.override.yml`](https://docs.docker.com/compose/extends/#understanding-multiple-compose-files).
 
 ### Docker images management
 
-`Rothenberg` pulls the lastest version of each docker image via `make start` or `make restart` (see below for more information about these commands).  
-These images are:
+`Rothenberg` pulls the latest version of each docker image via `make start` or `make restart` (see below for more information about these commands).
 
-- `nginx` ;
-- `php-fpm` ;
-- `php-cli` ;
+These images are:
+- `nginx` ;
+- `php-fpm` ;
+- `php-cli` ;
 - `composer` ;
-- `node`.
+- `node` .
 
 It's possible to disable this feature via the `.rothenberg.config` file.
 
@@ -53,13 +55,13 @@ It's possible to disable this feature via the `.rothenberg.config` file.
 
 ### Helpers to hide `docker` and `docker-compose`
 
-`Rothenberg` provides several helpers in `path/to/project/bin` to hide `docker` and `docker-compose` complexity.  
+`Rothenberg` provides several helpers in `path/to/project/bin` to hide `docker` and `docker-compose` complexities.  
 So, all scripts in `path/to/project/bin` can be run in the traditional way even if `docker` is used in the background.  
 For example, to update PHP dependencies, just do `bin/composer update`.
 
 ### Atoum configuration
 
-`Rothenberg` installs files `path/to/project/.atoum.php`, an atoum runner and a base test class in `path/to/project/tests/units`.
+`Rothenberg` installs files `path/to/project/.atoum.php`, an [atoum](https://github.com/atoum/atoum) runner and a base test class in `path/to/project/tests/units`.
 
 ### Automated `nginx` virtual host management
 
@@ -315,10 +317,10 @@ To update tests, just update the content of the `references` directory.
 Primary version of `Rothenberg` was born in the PHP business unit of [Norsys](http://norsys.fr), based in [Lyon, France](https://www.google.fr/maps/place/Lyon/@45.75801,4.8001016,13z/data=!3m1!4b1!4m5!3m4!1s0x47f4ea516ae88797:0x408ab2ae4bb21f0!8m2!3d45.764043!4d4.835659).  
 It was made with love to industrialize our PHP development based upon Symfony.  
 This project was a success, because we can now bootstrap a project or integrate a team and start to develop some features of fix bugs in a few minutes.  
-So, we decided to open-source it, because we thinks that this kind of tools must be shared with the PHP community.
+So, we decided to open-source it, because we think that this kind of tools must be shared with the PHP community.
 
 ## Why `Rothenberg`?
 
-[David Rothenberg](http://www.davidrothenberg.net) is a book author and a song composer which has made music with whales.  
-This project uses `docker`, which has a whale as logo, and `composer`, `docker-compose` to set up a Symfony environment.  
+[David Rothenberg](http://www.davidrothenberg.net) is a book author and a song composer who has made music with whales :whale:.  
+This project uses `docker`, which has a :whale: as logo, `composer` and `docker-compose` to set up a Symfony environment.  
 So, `Rothenberg` seems to be a good choice as name ;).
