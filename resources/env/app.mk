@@ -48,6 +48,9 @@ bin/docker-compose: | bin/. .env
 $(NPM_CACHE):
 	$(MKDIR) $@
 
+$(COMPOSER_CACHE):
+	$(MKDIR) $(COMPOSER_CACHE)
+
 .env: env/.env.dist $(firstword $(MAKEFILE_LIST)) $(SSH_KEY) | $(COMPOSER_CACHE) $(NPM_CACHE)
 	$(RM) var/cache
 	if [ -x bin/docker-compose -a -f .env ]; then bin/docker-compose down; fi
