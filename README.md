@@ -29,7 +29,7 @@ But… maybe you should read the following information before executing one of t
 
 ## Features
 
-In the following, we assume that the command `make -f vendor/norsys/rothenberg/Makefile install` was made in the directory `path/to/project`.
+In the following, we assume that the command `make install` was made in the directory `path/to/project`.
 
 ### Docker and docker-compose configuration
 
@@ -249,6 +249,7 @@ To update `Rothenberg` in a project, just do:
 ## Houston? We've got a problem!
 
 First, don't panic.
+If you're using Fedora and have troubles with the `make install` command, use `make install ENV=dev` instead.
 Then execute `docker system prune -f` to clean the docker environment, and try to reproduce the problem.  
 If the problem disappears, say thanks to Gandalf and enjoy!  
 But if the problem always exists, open an issue to help us to improve `rothenberg`.  
