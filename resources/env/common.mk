@@ -156,7 +156,7 @@ check-style-php: bin/phpcs ## Check coding conventions for PHP code.
 	bin/phpcs --encoding=UTF-8 --ignore=.css --ignore=.scss --ignore=.js --standard=./check-style.xml ./src
 
 bin/phpcs: vendor/bin/phpcs env/bin/bin.tpl | bin/docker-compose
-	export BINARY=vendor/squizlabs/php_codesniffer/scripts/phpcs && $(call export-file,env/bin/bin.tpl,bin/phpcs) && $(call executable,bin/phpcs)
+	export BINARY=$< && $(call export-file,env/bin/bin.tpl,$@) && $(call executable,$@)
 
 vendor/bin/phpcs: | vendor/autoload.php
 
@@ -164,7 +164,7 @@ fix-style-php: bin/phpcbf ## Fix coding conventions for PHP code.
 	bin/phpcbf -w --no-patch --encoding=UTF-8 --ignore=.css --ignore=.scss --ignore=.js --standard=./check-style.xml ./src
 
 bin/phpcbf: vendor/bin/phpcbf env/bin/bin.tpl | bin/docker-compose
-	export BINARY=vendor/squizlabs/php_codesniffer/scripts/phpcbf && $(call export-file,env/bin/bin.tpl,bin/phpcbf) && $(call executable,bin/phpcbf)
+	export BINARY=$< && $(call export-file,env/bin/bin.tpl,$@) && $(call executable,$@)
 
 vendor/bin/phpcbf: | vendor/autoload.php
 
