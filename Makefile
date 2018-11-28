@@ -66,11 +66,11 @@ docker/hub: docker
 # Tests
 
 .PHONY: tests-clean
-tests-clean:
+tests-clean: ## Clean tests temporary files
 	$(RM) tests/cases
 
 .PHONY: tests
-tests: test/install/app test/install/bundle test/update/app test/update/bundle test/bad/target test/rothenberg/update/uninstall test/install/not/supported/version
+tests: test/install/app test/install/bundle test/update/app test/update/bundle test/bad/target test/rothenberg/update/uninstall test/install/not/supported/version ## Run tests
 
 test/install/%:
 	$(eval $(check-repository))
@@ -123,3 +123,8 @@ test/install/not/supported/version:
 	@$(call assert, "$$(tail -n 1 tests/cases/install/not/supported/version/version.log | grep -c 'Symfony version lesser or greater than 3 is not currently supported.')" = '1', $@)
 
 test/bad/target test/install/%: GIT_BRANCH ?= $(shell git -C $(realpath $(THIS_DIR)) rev-parse --abbrev-ref HEAD)
+
+# Help
+
+help: ## Display this help.
+	@printf "$$(cat $(MAKEFILE_LIST) | egrep -h '^[^:]+:[^#]+## .+$$' | sed -e 's/:[^#]*##/:/' -e 's/\(.*\):/\\033[92m\1\\033[0m:/' | sort -d | column -c2 -t -s :)\n"
