@@ -1,7 +1,7 @@
 FROM php:cli
 RUN echo "deb http://ftp.us.debian.org/debian testing main contrib non-free" >> /etc/apt/sources.list
 RUN apt-get remove -qqy libgnutls-deb0-28 2>/dev/null || true
-RUN apt-get update -qq && apt-get install -qqy wget curl git/testing zlib1g-dev libpcre3-dev && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -qq && apt-get install -qqy wget curl git zlib1g-dev libpcre3-dev && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install zip
 RUN mkdir /rothenberg /src /.composer
 COPY composer.sh rothenberg.sh /rothenberg/
