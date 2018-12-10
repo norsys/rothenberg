@@ -183,7 +183,7 @@ bin/composer: $(THIS_FILE) | bin/docker-compose composer.passwd $(COMPOSER_CACHE
 	$(call install,$@)
 
 composer.passwd:
-	echo "root:x:`id -u`:0:root:/root:/bin/sh" > $@
+	echo "root:x:`id -u`:0:root:$(HOME):/bin/sh" > $@
 
 ## Git
 

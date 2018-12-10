@@ -103,6 +103,9 @@ env/Makefile: $(RESOURCES_DIR)/env/$(TARGET).mk env/common.mk
 
 env/common.mk: env/utils.mk
 
+composer.passwd:
+	echo "root:x:`id -u`:0:root:$(HOME):/bin/sh" > $@
+
 ## Tests
 
 .PHONY: install/tests
@@ -159,7 +162,7 @@ install/symfony: install/php composer.json | src
 .PHONY: install/symfony/app
 install/symfony/app: app/console.php web/app.php web/apple-touch-icon.png web/favicon.ico web/robots.txt
 
-composer.json: $(RESOURCES_DIR)/composer.json.php | $(PHP_BIN) $(COMPOSER_BIN)
+composer.json: $(RESOURCES_DIR)/composer.json.php | $(PHP_BIN) $(COMPOSER_BIN) composer.passwd
 	$(PHP_BIN) -f $(RESOURCES_DIR)/composer.json.php -- $(COMPOSER_JSON_PATH) $(TARGET) $(SYMFONY_VERSION)
 	$(COMPOSER_BIN) update --lock --no-scripts --ignore-platform-reqs --no-suggest
 
