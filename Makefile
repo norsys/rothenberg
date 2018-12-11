@@ -26,7 +26,7 @@ sed -e "s#\"norsys/rothenberg\": \"dev-[^\"]*\"#\"norsys/rothenberg\": \"dev-$$(
 $(MV) $1/composer.json.oracle $1/composer.json
 git -C $1 init
 git -C $1 add .
-git -C $1 commit -m "Oracle creation."
+git -C $1 commit -m "Oracle creation." --no-gpg-sign
 endef
 
 define assert
