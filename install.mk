@@ -160,7 +160,7 @@ install/symfony: install/php composer.json | src
 install/symfony/app: app/console.php web/app.php web/apple-touch-icon.png web/favicon.ico web/robots.txt
 
 composer.json: $(RESOURCES_DIR)/composer.json.php | $(PHP_BIN) $(COMPOSER_BIN)
-	$(PHP_BIN) -f $(RESOURCES_DIR)/composer.json.php -- $(COMPOSER_JSON_PATH) $(TARGET) $(SYMFONY_VERSION)
+	$(PHP_BIN) -d memory_limit=-1 -f $(RESOURCES_DIR)/composer.json.php -- $(COMPOSER_JSON_PATH) $(TARGET) $(SYMFONY_VERSION)
 	export GIT_SSH_COMMAND="ssh -i $(SSH_KEY) -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" && $(PHP_BIN) -d memory_limit=-1 $(COMPOSER_BIN) update --lock --no-scripts --ignore-platform-reqs --no-suggest
 
 ifeq ($(TARGET),app)
