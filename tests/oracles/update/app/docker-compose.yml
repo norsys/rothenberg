@@ -49,7 +49,7 @@ services:
 
     composer:
         user: ${USER_ID}
-        image: composer:1.4.2
+        image: composer:1.8.0
         working_dir: /src
         volumes:
             - ${SSH_KEY}:${SSH_KEY}:ro
