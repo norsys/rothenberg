@@ -2,4 +2,4 @@
 
 set -e
 
-exec ./bin/docker-compose run --rm composer composer "$@"
+exec ./bin/docker-compose run --rm composer php -d memory_limit=-1 /usr/bin/composer "$@"
