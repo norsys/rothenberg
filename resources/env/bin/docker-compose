@@ -27,7 +27,7 @@ else
 	if [ -S "$DOCKER_COMPOSE_VERSION" ]; then
 		VERSION="$DOCKER_COMPOSE_VERSION"
 	else
-		VERSION="1.16.0"
+		VERSION="1.23.2"
 	fi
 
 	if [ -S "$DOCKER_COMPOSE_IMAGE" ]; then
