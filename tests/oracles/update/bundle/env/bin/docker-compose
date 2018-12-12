@@ -16,7 +16,7 @@
 # This root cause of this error is that the user's home directory is mounted by Docker for Mac, so the docker-compose binary executed by docker read `~/.docker/config.json`.
 # However, in the docker-compose image, `docker-credential-osxkeychain` is unavailable.
 # So, if `~/.docker/config.json` contains `"credsStore": "osxkeychain"`, docker-compose throw this exception, sadly.
-DOCKER_COMPOSE_ON_HOST=$(which docker-compose)
+DOCKER_COMPOSE_ON_HOST=$(which docker-compose 2>/dev/null)
 
 # Exit on error, must be done here to avoid premature exit if the previous `which` can't find `docker-compose` in $PATH
 set -e
@@ -27,7 +27,7 @@ else
 	if [ -S "$DOCKER_COMPOSE_VERSION" ]; then
 		VERSION="$DOCKER_COMPOSE_VERSION"
 	else
-		VERSION="1.16.0"
+		VERSION="1.23.2"
 	fi
 
 	if [ -S "$DOCKER_COMPOSE_IMAGE" ]; then
