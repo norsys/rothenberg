@@ -12,6 +12,8 @@ if [ ! -z "$DOCKER_VCS" ]; then
 	composer config repositories.norsys-rothenberg vcs $DOCKER_VCS
 fi
 
+export GIT_SSH_COMMAND="ssh -i $SSH_KEY -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+
 composer require --dev --ignore-platform-reqs --no-suggest norsys/rothenberg:$VERSION
 
 make -f vendor/norsys/rothenberg/install.mk install TARGET=$TARGET COMPOSER_BIN=$(which composer 2>/dev/null) PHP_BIN=$(which php 2>/dev/null) SYMFONY_VERSION=$SYMFONY_VERSION WITH_DEBUG=$WITH_DEBUG SSH_KEY=$SSH_KEY
