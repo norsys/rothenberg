@@ -12,7 +12,7 @@ if [ ! -z "$DOCKER_VCS" ]; then
 	composer config repositories.norsys-rothenberg vcs $DOCKER_VCS
 fi
 
-export GIT_SSH_COMMAND="ssh -i $SSH_KEY -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+export GIT_SSH_COMMAND="ssh -i /.ssh/$SSH_KEY -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
 composer require --dev --ignore-platform-reqs --no-suggest norsys/rothenberg:$VERSION
 
