@@ -1,3 +1,8 @@
+# 1.1.0
+
+- Add support of private repository via SSH ;
+- Fix `memory exhausted error` with composer.
+
 # 1.0.0
 
 1. [@mageekguy](https://github.com/mageekguy) ;
