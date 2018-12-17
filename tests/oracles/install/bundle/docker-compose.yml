@@ -22,9 +22,11 @@ services:
             - ${SSH_KEY}:${SSH_KEY}:ro
             - ./composer.passwd:/etc/passwd
             - .:/src
-            - ${COMPOSER_CACHE}:/.composer
+            - ${COMPOSER_HOME}:/.composer
+            - ${COMPOSER_CACHE}:/.composer/cache
         environment:
-            - COMPOSER_CACHE_DIR=/.composer
+            - COMPOSER_HOME=/.composer
+            - COMPOSER_CACHE_DIR=${COMPOSER_CACHE}
             - COMPOSER_ALLOW_SUPERUSER=1
             - GIT_SSH_COMMAND=ssh -i ${SSH_KEY} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
             - SYMFONY_ENV=${SYMFONY_ENV}

@@ -29,6 +29,7 @@ ifeq ($(filter $(SYMFONY_ENV),$(ENVS)),)
 $(error SYMFONY_ENV $(SYMFONY_ENV) is invalid!);
 endif
 
+COMPOSER_HOME ?= $(HOME)/.composer
 COMPOSER_CACHE ?= $(HOME)/.composer/cache
 COMPOSER_OPTIONS := --no-suggest
 
