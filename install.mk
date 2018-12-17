@@ -85,7 +85,7 @@ env env/bin env/nginx app src web tests/units env/php app/config src/AppBundle s
 # Install
 
 .PHONY: install
-install: $(THIS_FILE) Makefile install/docker install/php install/symfony install/tests install/git install/check-style install/node gc
+install: $(THIS_FILE) Makefile install/docker install/symfony install/tests install/git install/check-style install/node gc
 	echo "TARGET = $(TARGET)" > .rothenberg
 ifneq ("$(ROTHENBERG_EXISTS)","")
 	@printf "\n=> Norsys/rothenberg update done!\n"
