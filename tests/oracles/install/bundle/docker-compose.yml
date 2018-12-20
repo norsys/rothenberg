@@ -26,7 +26,7 @@ services:
             - ${COMPOSER_CACHE}:/.composer/cache
         environment:
             - COMPOSER_HOME=/.composer
-            - COMPOSER_CACHE_DIR=${COMPOSER_CACHE}
+            - COMPOSER_CACHE_DIR=/.composer/cache
             - COMPOSER_ALLOW_SUPERUSER=1
             - GIT_SSH_COMMAND=ssh -i ${SSH_KEY} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
             - SYMFONY_ENV=${SYMFONY_ENV}
